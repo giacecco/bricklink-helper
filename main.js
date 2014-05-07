@@ -1,82 +1,160 @@
-var async = require('async'),
+var argv = require('yargs').argv,
+	async = require('async'),
 	cheerio = require('cheerio'),
-	request = require('request'),
-	argv = require('yargs').argv,
+	fs = require('fs'),
 	qs = require('querystring'),
+	request = require('request'),
 	_ = require('underscore');
 
-var SEARCH_PAGE_DEPTH = 10;
+var SEARCH_PAGE_DEPTH = 500,
+	MAX_SIMULTANEOUS_QUERIES = 3;
 
-var search = function (searchParameters, callback) {
-	var cont = true,
-		allResults = [ ],
-		pageNo = 0;
-	async.doWhilst(function (callback) {
-		searchPage(searchParameters, ++pageNo, function (err, results) {
-			allResults = allResults.concat(results);
-			cont = results.length >= SEARCH_PAGE_DEPTH;
+var search = function (partsList, callback) {
+
+	var searchPage = function (part, pageNo, callback) {
+		// the distribution of parameters between quesrystring and POST payload is
+		// odd but it the one the original website is using
+		request({
+				'url': "http://www.bricklink.com/search.asp",
+				'method': "POST",
+				'form': {
+					'viewFrom': "sf",
+					'fromResults': "Y",
+					'q': "",
+					'w': "",
+					'invNew': "*",
+					'sz': "10",
+					'searchSort': "P",
+					'sellerLoc': "C",
+					'sellerCountryID': "UK",
+					'qMin': part.quantity,
+					'regionID': "-1",
+					'qMax': "",
+				},
+				'qs': { 
+					'pg': pageNo,
+					'q': part.legoId,
+					'shipCountryID': "UK",
+					'sz': SEARCH_PAGE_DEPTH, // the website's max is 500
+					'searchSort': "P",
+				},
+			}, function (err, response, body) {
+				var results = [ ];
+				if (!err && response.statusCode == 200) {
+					var $ = cheerio.load(body);
+					results = $('tr.tm').map(function (index, elem) {
+						var item = { 
+							'new': "new" === $('td:nth-child(2)', elem).text().toLowerCase(),
+							// the code, for the time being, consider only UK
+							// sellers shipping to UK customers, so this is not
+							// relevant
+							// 'location': $('td:nth-child(3) font font', elem).text().match(/Loc: (.+),/)[1],
+							'minBuy': $('td:nth-child(3) font font', elem).text().match(/Min Buy: (.+)$/)[1],
+							'quantity': parseInt($(elem).text().match(/Qty: (.+)Each/)[1]),						
+							'price': parseFloat($('td:nth-child(4) font:nth-child(1)', elem).text().match(/Each\:.~GBP (.+)\(/)[1]),						
+							// 'sellerName': $('td:nth-child(4) a', elem).html(),
+							'sellerFeedback': parseInt($('td:nth-child(4) a', elem).text().match(/\((.+)\)/)[1]),
+							'sellerUsername': qs.parse($('td:nth-child(4) a', elem).attr('href').match(/\?(.+)/)[1]).p,
+						};
+						item.minBuy = item.minBuy === "None" ? null : parseFloat(item.minBuy.match(/~GBP (.+)/)[1]);
+						item.sellerUrl = "http://www.bricklink.com/store.asp?" + qs.stringify({ 'p': item.sellerUsername });
+						// TODO, rather than the URL, check the actual feedback!
+						item.sellerFeedbackUrl = "http://www.bricklink.com/feedback.asp?" + qs.stringify({ 'u': item.sellerUsername });
+						return item;
+					}).get();	
+				}
+				callback(err, results);
+		});
+	};
+
+	var searchOne = function (part, callback) {
+		var cont = true,
+			allResults = [ ],
+			pageNo = 0;
+		async.doWhilst(function (callback) {
+			searchPage(part, ++pageNo, function (err, results) {
+				allResults = allResults.concat(results);
+				cont = results.length >= SEARCH_PAGE_DEPTH;
+				callback(err);
+			});
+		}, function () { return cont; }, function (err) {
+			callback(err, allResults);
+		});
+	}
+
+	partsList = [ ].concat(partsList || [ ]);
+	var allResults = { };
+	async.eachLimit(partsList, MAX_SIMULTANEOUS_QUERIES, function (part, callback) {
+		searchOne({ 
+			'legoId': part.legoId,
+			'qMin': part.quantity,
+		}, function (err, results) {
+			allResults[part.legoId] = results;
 			callback(err);
 		});
-	}, function () { return cont; }, function (err) {
+	}, function (err) {
 		callback(err, allResults);
 	});
 }
 
-var searchPage = function (searchParameters, pageNo, callback) {
-	// the distribution of parameters between quesrystring and POST payload is
-	// odd but it the one the original website is using
-	request({
-			'url': "http://www.bricklink.com/search.asp",
-			'method': "POST",
-			'form': {
-				'viewFrom': "sf",
-				'fromResults': "Y",
-				'q': "",
-				'w': "",
-				'invNew': "*",
-				'sz': "10",
-				'searchSort': "P",
-				'sellerLoc': "C",
-				'sellerCountryID': "UK",
-				'qMin': searchParameters.qMin,
-				'regionID': "-1",
-				'qMax': "",
-			},
-			'qs': { 
-				'pg': pageNo,
-				'q': searchParameters.legoId,
-				'shipCountryID': "UK",
-				'sz': SEARCH_PAGE_DEPTH, // the website's max is 500
-				'searchSort': "P",
-			},
-		}, function (err, response, body) {
-			var results = [ ];
-			if (!err && response.statusCode == 200) {
-				var $ = cheerio.load(body);
-				results = $('tr.tm').map(function (index, elem) {
-					var item = { 
-						'new': "new" === $('td:nth-child(2)', elem).text().toLowerCase(),
-						// the code, for the time being, consider only UK
-						// sellers shipping to UK customers, so this is not
-						// relevant
-						// 'location': $('td:nth-child(3) font font', elem).text().match(/Loc: (.+),/)[1],
-						'minBuy': $('td:nth-child(3) font font', elem).text().match(/Min Buy: (.+)$/)[1],
-						'quantity': parseInt($(elem).text().match(/Qty: (.+)Each/)[1]),						
-						'price': parseFloat($('td:nth-child(4) font:nth-child(1)', elem).text().match(/Each\:.~GBP (.+)\(/)[1]),						
-						'sellerName': $('td:nth-child(4) a', elem).html(),
-						'sellerFeedback': parseInt($('td:nth-child(4) a', elem).text().match(/\((.+)\)/)[1]),
-						'sellerUsername': qs.parse($('td:nth-child(4) a', elem).attr('href').match(/\?(.+)/)[1]).p,
-					};
-					item.minBuy = item.minBuy === "None" ? null : parseFloat(item.minBuy.match(/~GBP (.+)/)[1]);
-					item.sellerUrl = "http://www.bricklink.com/store.asp?" + qs.stringify({ 'p': item.sellerUsername });
-					// TODO, rather than the URL, check the actual feedback!
-					item.sellerFeedbackUrl = "http://www.bricklink.com/feedback.asp?" + qs.stringify({ 'u': item.sellerUsername });
-					return item;
-				}).get();	
-			}
-			callback(err, results);
+var getBySeller = function (byParts) {
+	bySeller = { };
+	_.keys(byPart).forEach(function (legoId) {
+		byPart[legoId].forEach(function (availability) {
+			if (!bySeller[availability.sellerUsername]) bySeller[availability.sellerUsername] = { 
+				'minBuy': availability.minBuy,
+				'sellerFeedback': availability.sellerFeedback,
+				'parts': { },
+			};
+			bySeller[availability.sellerUsername].parts[legoId] = { 
+					'new': availability.new,
+					'quantity': availability.quantity, 
+					'price': availability.price,
+			};
+		});
 	});
-};
+	return bySeller;
+}
+
+var createOrderForRarestPieces = function (byPart) {
+	byPart = JSON.parse(JSON.stringify(byPart)); // clones the object
+	var	bySeller = getBySeller(byPart),
+		// the rarest parts are the ones with the minimum number of sellers
+		minNumberOfSellersForOnePart = _.keys(byPart).reduce(function (memo, partId) {
+			if ((_.keys(byPart[partId]).length < memo) || _.isNull(memo)) memo = _.keys(byPart[partId]).length;
+			return memo;
+		}, null),
+		// these sellers all sell one or more equally rare parts
+		possibleSellerUsernames = _.keys(byPart).reduce(function (memo, partId) {
+			if (byPart[partId].length === minNumberOfSellersForOnePart) {
+				memo = _.unique(memo.concat(byPart[partId].map(function (item) { return item.sellerUsername; })));
+			}
+			return memo;
+		}, [ ]);
+	console.log("possibleSellerUsernames is " + possibleSellerUsernames);
+	// delete information bySeller 
+	_.keys(bySeller).forEach(function (sellerUsername) {
+		if (!_.contains(possibleSellerUsernames, sellerUsername)) delete bySeller[sellerUsername];
+	});
+	// finds the seller from which I can buy the most parts
+	var maxParts = _.keys(bySeller).reduce(function (memo, sellerUsername) {
+		if ((_.keys(bySeller[sellerUsername]).length > memo) || _.isNull(memo)) {
+			memo = _.keys(bySeller[sellerUsername]).length;
+		}
+		return memo;
+	}, null);
+	console.log("maxParts is " + maxParts);
+	_.keys(bySeller).forEach(function (sellerUsername) {
+		if (_.keys(bySeller[sellerUsername]).length < maxParts) {
+			delete bySeller[sellerUsername];
+		}
+	});
+	console.log(bySeller);
+
+	// ABORTED, better using a database like memory structure, this is too messy
+
+}
+
 
 var PARTS_LIST = [
 	// page 1
@@ -112,9 +190,40 @@ var PARTS_LIST = [
 	{ 'legoId': "4622803", 'quantity': 5 }, 
 ];
 
-search({
-	'legoId': '4655900',
-	'qMin': 1,
-}, function (err, results) {
-	console.log(results.length);
+/*
+search(PARTS_LIST, function (err, byPart) {
+
 });
+*/
+var byPart = JSON.parse(fs.readFileSync("./test_data.json"));
+
+var partIds = _.keys(byPart),
+	unavailablePartIds = partIds.filter(function (partId) { return _.keys(byPart[partId]).length === 0; });
+// drop data for the unavailable parts
+if (unavailablePartIds.length > 0) {
+	console.log("The following parts are unavailable from any seller: " + unavailablePartIds.join(", "));
+	unavailablePartIds.forEach(function (partId) { delete byPart[partId]; });
+}
+createOrderForRarestPieces(byPart);
+
+
+
+/*
+bySeller = { };
+_.keys(byPart).forEach(function (legoId) {
+	byPart[legoId].forEach(function (availability) {
+		if (!bySeller[availability.sellerUsername]) bySeller[availability.sellerUsername] = { 
+			'minBuy': availability.minBuy,
+			'sellerFeedback': availability.sellerFeedback,
+			'parts': { },
+		};
+		bySeller[availability.sellerUsername].parts[legoId] = { 
+				'new': availability.new,
+				'quantity': availability.quantity, 
+				'price': availability.price,
+		};
+	});
+
+})
+console.log(bySeller);
+*/
