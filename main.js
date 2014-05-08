@@ -39,9 +39,55 @@ var PARTS_LIST = [
 	{ 'partId': "4622803", 'quantity': 5 }, 
 ];
 
+/*
 bricklinkSearch.search(PARTS_LIST, function (err, byPart) {
 	fs.writeFileSync(path.join(__dirname, "foo.json"), JSON.stringify(byPart));
 	console.log("Finished.");
 });
+*/
+var data = JSON.parse(fs.readFileSync(path.join(__dirname, "test-data.json")));
 
+var getSellerUsernamesForPartId = function (data, partId) {
+	return _.unique(data.reduce(function (memo, d) { 
+			if (d.partId === partId) memo = memo.concat(d.sellerUsername);
+			return memo;
+		}, [ ]));
+};
+
+var getSellerUsernamesForAllPartIds = function (data, partIds) {
+	partIds = [ ].concat(partIds || [ ]);
+	return _.intersection(partIds.map(function (partId) {
+		return getSellerUsernamesForPartId(data, partId);
+	}));
+};
+
+var getMinNoOfSellers = function (data) {
+	return _.unique(data.map(function (d) { return d.partId; }))
+		.reduce(function (memo, partId) {
+			var noOfSellers = data.filter(function (d) { return d.partId === partId; }).length;
+			if (!memo || noOfSellers < memo) memo = noOfSellers;
+			return memo;
+		}, null); 
+};
+
+var getPartIdsWithMinNumberOfSellers = function (data) {
+	var minNoOfSellers = getMinNoOfSellers(data);
+	return _.unique(data.map(function (d) { return d.partId; }))
+		.reduce(function (memo, partId) {
+			var noOfSellers = data.filter(function (d) { return d.partId === partId; }).length;
+			if (noOfSellers === minNoOfSellers) memo = _.unique(memo.concat(partId));
+			return memo;
+		}, [ ]);
+};
+
+var getOrder = function (market) {
+	var rarestPartIds, sellerUsernames;
+	// I start creating the order from the rarest items
+	rarestPartIds = getPartIdsWithMinNumberOfSellers(market);
+	sellerUsernames = getSellerUsernamesForAllPartIds(market, rarestPartIds);
+	console.log("The rarest partIds are " + rarestPartIds);
+	console.log("The sellers who can offer all of them are " + sellerUsernames);
+};
+
+console.log(getOrder(data));
 

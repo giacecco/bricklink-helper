@@ -1,6 +1,14 @@
 var SEARCH_PAGE_DEPTH = 500,
 	MAX_SIMULTANEOUS_QUERIES = 3;
 
+/* TODO: at the moment, 'search' returns only lots that fully match the 
+   requirements for some partId. This is not optimal, as, after identifying a
+   possible seller, it is useful to know about the partial availaibility of 
+   other partIds, too! I should do a 'second round' of searching on all
+   sellers identified that far, for all other partIds they could partially
+   supply. http://www.bricklink.com/searchAdvanced.asp should be able to
+   enable that. */
+
 var async = require('async'),
 	cheerio = require('cheerio'),
 	qs = require('querystring'),
