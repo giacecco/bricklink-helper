@@ -1,13 +1,8 @@
-var DB_FILENAME = 'foo.nedb',
-	SEARCH_PAGE_DEPTH = 500,
+var SEARCH_PAGE_DEPTH = 500,
 	MAX_SIMULTANEOUS_QUERIES = 3;
 
-var path = require('path'),
-	Datastore = require('nedb'), 
-	db = new Datastore({ filename: path.join(__dirname, DB_FILENAME), autoload: true }),
-	async = require('async'),
+var async = require('async'),
 	cheerio = require('cheerio'),
-	fs = require('fs'),
 	qs = require('querystring'),
 	request = require('request'),
 	_ = require('underscore');
@@ -36,7 +31,7 @@ exports.search = function (partsList, callback) {
 				},
 				'qs': { 
 					'pg': pageNo,
-					'q': part.legoId,
+					'q': part.partId,
 					'shipCountryID': "UK",
 					'sz': SEARCH_PAGE_DEPTH, // the website's max is 500
 					'searchSort': "P",
@@ -49,7 +44,7 @@ exports.search = function (partsList, callback) {
 					var $ = cheerio.load(body);
 					results = $('tr.tm').map(function (index, elem) {
 						var item = { 
-							'partId': part.legoId,
+							'partId': part.partId,
 							'new': "new" === $('td:nth-child(2)', elem).text().toLowerCase(),
 							// the code, for the time being, consider only UK
 							// sellers shipping to UK customers, so this is not
@@ -68,11 +63,7 @@ exports.search = function (partsList, callback) {
 						item.sellerFeedbackUrl = "http://www.bricklink.com/feedback.asp?" + qs.stringify({ 'u': item.sellerUsername });
 						return item;
 					}).get();	
-					async.forEach(results, function (result, callback) {
-						db.searchResults.insert(result, callback); 
-					}, function (err) {
-						callback(err, results);
-					});
+					callback(null, results);
 				}
 		});
 	};
@@ -93,22 +84,16 @@ exports.search = function (partsList, callback) {
 	}
 
 	partsList = [ ].concat(partsList || [ ]);
-	fs.unlinkSync(path.join(__dirname, DB_FILENAME));
-	var allResults = { };
+	var allResults = [ ];
 	async.eachLimit(partsList, MAX_SIMULTANEOUS_QUERIES, function (part, callback) {
 		searchOne({ 
-			'legoId': part.legoId,
+			'partId': part.partId,
 			'qMin': part.quantity,
 		}, function (err, results) {
-			allResults[part.legoId] = results;
+			allResults = allResults.concat(results);
 			callback(err);
 		});
 	}, function (err) {
-		callback(err, db);
+		callback(err, allResults);
 	});
 };
-
-exports.get = function (callback) {
-	callback(null, db);
-};
-

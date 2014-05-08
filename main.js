@@ -1,7 +1,9 @@
 var argv = require('yargs').argv,
 	async = require('async'),
+	fs = require('fs'),
+	path = require('path'),
 	_ = require('underscore'),
-	bricklinkSearch = require('./bricklink-search.js');
+	bricklinkSearch = require('./bricklink-search');
 
 var PARTS_LIST = [
 	// page 1
@@ -37,41 +39,9 @@ var PARTS_LIST = [
 	{ 'partId': "4622803", 'quantity': 5 }, 
 ];
 
-/*
-search(PARTS_LIST, function (err, byPart) {
+bricklinkSearch.search(PARTS_LIST, function (err, byPart) {
+	fs.writeFileSync(path.join(__dirname, "foo.json"), JSON.stringify(byPart));
 	console.log("Finished.");
 });
-*/
-// find the pieces with the min number of sellers
-bricklinkSearch.get(function (err, searchResults) {
-
-	var getLowestNumberOfSellers = function (callback) { 
-		searchResults.find({ }, function (err, docs) {
-			async.reduce(_.unique(docs.map(function (doc) { return doc.partId; })), null, function (memo, partId, callback) {
-				searchResults.count({ 'partId': partId }, function (err, count) {
-					if (!memo || count < memo) memo = count;
-					callback(null, memo);
-				});
-			}, callback);
-		});
-	};
-
-	var getPartsWithLowestNumberOfSellers = function (callback) {
-		getLowestNumberOfSellers(function (err, lowestNumberOfSellers) {
-			searchResults.find({ }, function (err, docs) {
-				async.reduce(_.unique(docs.map(function (doc) { return doc.partId; })), [ ], function (memo, partId, callback) {
-					searchResults.count({ 'partId': partId }, function (err, count) {
-						if (lowestNumberOfSellers === count) memo = _.unique(memo.concat(partId));
-						callback(null, memo);
-					});
-				}, callback);
-			});
-		});
-	};
-
-	getPartsWithLowestNumberOfSellers(function (err, partIds) {
-		console.log(partIds);
-	});
 
 
-});
