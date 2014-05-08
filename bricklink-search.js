@@ -1,13 +1,6 @@
-var SEARCH_PAGE_DEPTH = 500, // because of the BrickLink duplication bug, these are actually 250!
+var DEBUG = true,
+	SEARCH_PAGE_DEPTH = 25, // because of the BrickLink duplication bug, these are actually half of it!
 	MAX_SIMULTANEOUS_QUERIES = 3;
-
-/* TODO: at the moment, 'search' returns only lots that fully match the 
-   requirements for some partId. This is not optimal, as, after identifying a
-   possible seller, it is useful to know about the partial availaibility of 
-   other partIds, too! I should do a 'second round' of searching on all
-   sellers identified that far, for all other partIds they could partially
-   supply. http://www.bricklink.com/searchAdvanced.asp should be able to
-   enable that. */
 
 var async = require('async'),
 	cheerio = require('cheerio'),
@@ -15,9 +8,17 @@ var async = require('async'),
 	request = require('request'),
 	_ = require('underscore');
 
+var log = function (message) {
+	if (DEBUG) {
+		var d = new Date();
+		console.log(d.getFullYear() + "/" + (d.getMonth() < 9 ? '0' : '') + (d.getMonth() + 1) + "/" + (d.getDate() < 10 ? '0' : '') + d.getDate() + " " + (d.getHours() < 10 ? '0' : '') + d.getHours() + ":" + (d.getMinutes() < 10 ? '0' : '') + d.getMinutes() + ":" + (d.getSeconds() < 10 ? '0' : '') + d.getSeconds() + " - " + message);
+	}
+}
+
 exports.search = function (searchOptions, callback) {
 
-	var searchPart = function (searchOptions, callback) {
+	var searchQueue = async.queue(function (searchOptions, callback) {
+		log("Searching for " + JSON.stringify(searchOptions));
 		request({
 				'url': "http://www.bricklink.com/searchAdvanced.asp",
 				'method': "POST",
@@ -72,16 +73,45 @@ exports.search = function (searchOptions, callback) {
 					callback(null, results);
 				}
 		});
-	};
+	}, MAX_SIMULTANEOUS_QUERIES);
 
-	searchOptions = [ ].concat(searchOptions || [ ]);
-	var allResults = [ ];
-	async.eachLimit(searchOptions, MAX_SIMULTANEOUS_QUERIES, function (s, callback) {
+	var searchPart = function (searchOptions, callback) {
+		searchQueue.push(searchOptions, callback);
+	}
+
+	searchOptions = [ ].concat(JSON.parse(JSON.stringify(searchOptions)) || [ ]);
+	var firstRoundResults = [ ],
+		secondRoundResults = [ ];
+	// first round, search for sellers that can provide the full number of 
+	// pieces for at least one part
+	log("Start of first round of search...");
+	async.each(searchOptions, function (s, callback) {
 		searchPart(s, function (err, results) {
-			allResults = allResults.concat(results);
+			firstRoundResults = firstRoundResults.concat(results);
 			callback(err);
 		});
 	}, function (err) {
-		callback(err, allResults);
+		// second round, for all sellers identified this far, search also for 
+		// partial availability of all other parts
+		log("Start of second round of search...");
+		var allPartIds = searchOptions.map(function (s) { return s.partId; });
+		var sellerUsernames = _.uniq(firstRoundResults.map(function (r) { return r.sellerUsername; })).sort();
+		async.each(sellerUsernames, function (sellerUsername, callback) {
+			var fullAvailabilityPartIds = firstRoundResults.reduce(function (memo, r) { 
+					if (r.sellerUsername === sellerUsername) memo = memo.concat(r.partId);
+					return memo; 
+				}, [ ]);
+			async.each(_.difference(allPartIds, fullAvailabilityPartIds), function (partId, callback) {
+				searchPart({ 'partId': partId, 'sellerUsername': sellerUsername }, function (err, results) {
+					if (results.length > 0) {
+						log("Adding partial availability of " + partId + " from " + sellerUsername + ".");
+						secondRoundResults = secondRoundResults.concat(results);
+					}
+					callback(err);
+				});				
+			}, callback);
+		}, function (err) {
+			callback(err, firstRoundResults.concat(secondRoundResults));
+		});
 	});
 };
