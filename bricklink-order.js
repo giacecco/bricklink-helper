@@ -111,7 +111,7 @@ module.exports = function (options) {
 					newRequirement = temp.newRequirement;
 					newAvailability = temp.newAvailability;			
 				} else {
-					console.log("Could not find sellers for " + newRequirement.map(function (r) { return r.partId; }));
+					console.log("Could not find sellers for " + newRequirement.map(function (r) { return r.partId; }).join(", ") + ".");
 				}
 			}
 			return orders;
