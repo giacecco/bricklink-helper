@@ -56,7 +56,7 @@ bricklinkSearch.get(function (err, searchResults) {
 		});
 	};
 
-	var getPartsWithLowerNumberOfSellers = function (callback) {
+	var getPartsWithLowestNumberOfSellers = function (callback) {
 		getLowestNumberOfSellers(function (err, lowestNumberOfSellers) {
 			searchResults.find({ }, function (err, docs) {
 				async.reduce(_.unique(docs.map(function (doc) { return doc.partId; })), [ ], function (memo, partId, callback) {
@@ -69,7 +69,7 @@ bricklinkSearch.get(function (err, searchResults) {
 		});
 	};
 
-	getPartsWithLowerNumberOfSellers(function (err, partIds) {
+	getPartsWithLowestNumberOfSellers(function (err, partIds) {
 		console.log(partIds);
 	});
 
