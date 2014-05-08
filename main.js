@@ -1,4 +1,6 @@
-var argv = require('yargs').argv,
+var argv = require('yargs')
+		.demand([ 'out '])
+		.argv,
 	async = require('async'),
 	fs = require('fs'),
 	path = require('path'),
@@ -155,45 +157,12 @@ var makeOrder = function (requirement, availability, sellerUsername) {
 				orders[topSellerUsername] = temp.pieces;
 				newRequirement = temp.newRequirement;
 				newAvailability = temp.newAvailability;			
+			} else {
+				console.log("Could not find sellers for " + newRequirement.map(function (r) { return r.partId; }));
 			}
 		}
 		return orders;
 	}
 }
 
-console.log(JSON.stringify(makeOrder(PARTS_LIST, data)));
-
-/*
-var getSellerUsernamesForPartId = function (data, partId) {
-	return _.unique(data.reduce(function (memo, d) { 
-			if (d.partId === partId) memo = memo.concat(d.sellerUsername);
-			return memo;
-		}, [ ]));
-};
-
-var getSellerUsernamesForAllPartIds = function (data, partIds) {
-	partIds = [ ].concat(partIds || [ ]);
-	return _.intersection(partIds.map(function (partId) {
-		return getSellerUsernamesForPartId(data, partId);
-	}));
-};
-
-var getMinNoOfSellers = function (data) {
-	return _.unique(data.map(function (d) { return d.partId; }))
-		.reduce(function (memo, partId) {
-			var noOfSellers = data.filter(function (d) { return d.partId === partId; }).length;
-			if (!memo || noOfSellers < memo) memo = noOfSellers;
-			return memo;
-		}, null); 
-};
-
-var getPartIdsWithMinNumberOfSellers = function (data) {
-	var minNoOfSellers = getMinNoOfSellers(data);
-	return _.unique(data.map(function (d) { return d.partId; }))
-		.reduce(function (memo, partId) {
-			var noOfSellers = data.filter(function (d) { return d.partId === partId; }).length;
-			if (noOfSellers === minNoOfSellers) memo = _.unique(memo.concat(partId));
-			return memo;
-		}, [ ]);
-};
-*/
+fs.writeFileSync(argv.out, JSON.stringify(makeOrder(PARTS_LIST, data)));
