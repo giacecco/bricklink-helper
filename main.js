@@ -39,12 +39,13 @@ var PARTS_LIST = [
 	{ 'partId': "4622803", 'quantity': 5 }, 
 ];
 
-/*
+
 bricklinkSearch.search(PARTS_LIST, function (err, byPart) {
 	fs.writeFileSync(path.join(__dirname, "foo.json"), JSON.stringify(byPart));
 	console.log("Finished.");
 });
-*/
+
+/*
 var data = JSON.parse(fs.readFileSync(path.join(__dirname, "test-data.json")));
 
 var getSellerUsernamesForPartId = function (data, partId) {
@@ -90,4 +91,4 @@ var getOrder = function (market) {
 };
 
 console.log(getOrder(data));
-
+*/

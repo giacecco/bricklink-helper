@@ -1,4 +1,4 @@
-var SEARCH_PAGE_DEPTH = 500,
+var SEARCH_PAGE_DEPTH = 500, // because of the BrickLink duplication bug, these are actually 250!
 	MAX_SIMULTANEOUS_QUERIES = 3;
 
 /* TODO: at the moment, 'search' returns only lots that fully match the 
@@ -15,34 +15,28 @@ var async = require('async'),
 	request = require('request'),
 	_ = require('underscore');
 
-exports.search = function (partsList, callback) {
+exports.search = function (searchOptions, callback) {
 
-	var searchPage = function (part, pageNo, callback) {
-		// the distribution of parameters between quesrystring and POST payload is
-		// odd but it the one the original website is using
+	var searchPart = function (searchOptions, callback) {
 		request({
-				'url': "http://www.bricklink.com/search.asp",
+				'url': "http://www.bricklink.com/searchAdvanced.asp",
 				'method': "POST",
+				'followAllRedirects': true,
 				'form': {
-					'viewFrom': "sf",
-					'fromResults': "Y",
-					'q': "",
-					'w': "",
-					'invNew': "*",
-					'sz': "10",
-					'searchSort': "P",
+					'a': "g",
+					'qMin': searchOptions.quantity,
+					'saleOff': "0",
+					'searchSort': "P", 
+					'sz': SEARCH_PAGE_DEPTH,
+					'q': searchOptions.partId,
+					'sellerUsername': searchOptions.sellerUsername,
 					'sellerLoc': "C",
 					'sellerCountryID': "UK",
-					'qMin': part.quantity,
 					'regionID': "-1",
-					'qMax': "",
-				},
-				'qs': { 
-					'pg': pageNo,
-					'q': part.partId,
+					'shipTo': "Y",
 					'shipCountryID': "UK",
-					'sz': SEARCH_PAGE_DEPTH, // the website's max is 500
-					'searchSort': "P",
+					'moneyTypeID': "27", // Pound Sterling
+					'pmtMethodID': "11", // PayPal
 				},
 			}, function (err, response, body) {
 				var results = [ ];
@@ -52,7 +46,7 @@ exports.search = function (partsList, callback) {
 					var $ = cheerio.load(body);
 					results = $('tr.tm').map(function (index, elem) {
 						var item = { 
-							'partId': part.partId,
+							'partId': searchOptions.partId,
 							'new': "new" === $('td:nth-child(2)', elem).text().toLowerCase(),
 							// the code, for the time being, consider only UK
 							// sellers shipping to UK customers, so this is not
@@ -62,42 +56,28 @@ exports.search = function (partsList, callback) {
 							'quantity': parseInt($(elem).text().match(/Qty: (.+)Each/)[1]),						
 							'price': parseFloat($('td:nth-child(4) font:nth-child(1)', elem).text().match(/Each\:.~GBP (.+)\(/)[1]),						
 							// 'sellerName': $('td:nth-child(4) a', elem).html(),
-							'sellerFeedback': parseInt($('td:nth-child(4) a', elem).text().match(/\((.+)\)/)[1]),
+							'sellerNoOfFeedback': parseInt($('td:nth-child(4) a', elem).text().match(/\((.+)\)/)),
 							'sellerUsername': qs.parse($('td:nth-child(4) a', elem).attr('href').match(/\?(.+)/)[1]).p,
 						};
+						if (item.sellerNoOfFeedback) item.sellerNoOfFeedback = item.sellerNoOfFeedback[1];
 						item.minBuy = item.minBuy === "None" ? null : parseFloat(item.minBuy.match(/~GBP (.+)/)[1]);
 						item.sellerUrl = "http://www.bricklink.com/store.asp?" + qs.stringify({ 'p': item.sellerUsername });
 						// TODO, rather than the URL, check the actual feedback!
 						item.sellerFeedbackUrl = "http://www.bricklink.com/feedback.asp?" + qs.stringify({ 'u': item.sellerUsername });
 						return item;
 					}).get();	
+					// this is made necessary because at the moment BrickLink is
+					// returning duplicate results!
+					results = _.uniq(results, false, function (x) { return x.sellerUsername + '_' + x.price; });
 					callback(null, results);
 				}
 		});
 	};
 
-	var searchOne = function (part, callback) {
-		var cont = true,
-			allResults = [ ],
-			pageNo = 0;
-		async.doWhilst(function (callback) {
-			searchPage(part, ++pageNo, function (err, results) {
-				allResults = allResults.concat(results);
-				cont = results.length >= SEARCH_PAGE_DEPTH;
-				callback(err);
-			});
-		}, function () { return cont; }, function (err) {
-			callback(err, allResults);
-		});
-	}
-
-	partsList = [ ].concat(partsList || [ ]);
+	searchOptions = [ ].concat(searchOptions || [ ]);
 	var allResults = [ ];
-	async.eachLimit(partsList, MAX_SIMULTANEOUS_QUERIES, function (part, callback) {
-		searchOne({ 
-			'partId': part.partId,
-			'qMin': part.quantity,
-		}, function (err, results) {
+	async.eachLimit(searchOptions, MAX_SIMULTANEOUS_QUERIES, function (s, callback) {
+		searchPart(s, function (err, results) {
 			allResults = allResults.concat(results);
 			callback(err);
 		});
