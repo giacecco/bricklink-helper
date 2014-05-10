@@ -7,7 +7,7 @@ var argv = require('yargs')
 	path = require('path'),
 	_ = require('underscore'),
 	bricklinkSearch = new require('./bricklink-search')({ 'debug': true }),
-	bricklinkOrder = new require('./bricklink-order2')();
+	bricklinkOrder = new require('./bricklink-order-simplex')();
 
 var readPartsList = function (filename, callback) {
 	csv()
