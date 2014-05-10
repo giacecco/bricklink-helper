@@ -75,6 +75,8 @@ which translates in an *A* that looks like this:
 
 ![](docs/images/006.gif)
 
+More to come...
+
 ##Licence
 
 ![Creative Commons License](http://i.creativecommons.org/l/by/4.0/88x31.png "Creative Commons License") This work is licensed under a [Creative Commons Attribution 4.0 International](http://creativecommons.org/licenses/by/4.0/).
