@@ -1,0 +1,31 @@
+{
+  "name": "bricklink-helper",
+  "version": "0.0.1",
+  "description": "Searches bricklink.com to calculate the most cost-effective combination of sellers to buy a set of specified bricks",
+  "main": "main.js",
+  "directories": {
+    "doc": "docs"
+  },
+  "dependencies": {
+    "async": "0.8.0",
+    "cheerio": "0.15.0",
+    "csv": "0.3.7",
+    "request": "2.34.0",
+    "underscore": "1.6.0",
+    "yargs": "1.2.1"
+  },
+  "devDependencies": {},
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/Digital-Contraptions-Imaginarium/bricklink-helper.git"
+  },
+  "keywords": [
+    "lego"
+  ],
+  "author": "Gianfranco Cecconi",
+  "license": "CC-BY 4.0",
+  "bugs": {
+    "url": "https://github.com/Digital-Contraptions-Imaginarium/bricklink-helper/issues"
+  },
+  "homepage": "https://github.com/Digital-Contraptions-Imaginarium/bricklink-helper"
+}
