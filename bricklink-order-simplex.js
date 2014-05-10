@@ -1,9 +1,11 @@
 /* **************************************************************************
    This module prepares the data as vectors and matrices suitable to the
-   running the simplex algorithm.
+   running the simplex algorithm. Naming conventions and what the
+   vectors and matrices actually are are described in the documentation at 
+   https://github.com/Digital-Contraptions-Imaginarium/bricklink-helper/blob/master/README.md
    ************************************************************************** */
 
-var mathjs = require('mathjs'),
+var mathjs = require('mathjs')(),
 	// Iain Dunning's SimplexJS library https://github.com/IainNZ/SimplexJS ,
 	// adapted to work as a NodeJS module
 	SimplexJS = require('./SimplexJS'),
@@ -17,34 +19,30 @@ module.exports = function (options) {
 		// readying a loosely-typed file, so we need to enforce the types every
 		// time
 
-		// returns the reference list of sellers, in alphabetical, non-
-		// case-sensitive order
 		var sellers = _.uniq(availability
 			.map(function (a) { return a.sellerUsername; }))
 			.sort(function (a, b) {
 				return a.toLowerCase() < b.toLowerCase() ? -1 : a.toLowerCase() > b.toLowerCase() ? 1 : 0;
 			});
 
-		// returns the reference list of partIds available on the market 
-		// (not the ones specified in the required parts list), in alphabetical, 
-		// non-case-sensitive order
+		var M = sellers.length;
+
 		var partIds = _.uniq(availability
 			.map(function (a) { return a.partId; }))
 			.sort(function (a, b) {
 				return a.toLowerCase() < b.toLowerCase() ? -1 : a.toLowerCase() > b.toLowerCase() ? 1 : 0;
 			});
 
-		// for each seller, returns the value of the minimum order they'll 
-		// accept
-		var minBuy = sellers.map(function (sellerUsername) {
+		var N = partIds.length;
+
+		var v = sellers.map(function (sellerUsername) {
 			var temp = _.find(availability, function (a) {
 					return a.sellerUsername === sellerUsername;
 				}).minBuy;
 			return temp ? parseFloat(temp) : 0.;
 		});
 
-		// for each seller, for each partId, this returns the worst price
-		var prices = sellers.map(function (sellerUsername) {
+		var p = mathjs.matrix(sellers.map(function (sellerUsername) {
 			return partIds.map(function (partId) {
 				var temp = _.filter(availability, function (a) {
 						return (a.sellerUsername === sellerUsername) && (a.partId === partId);
@@ -55,13 +53,9 @@ module.exports = function (options) {
 					});
 				return temp.length > 0 ? temp[0] : 0.;
 			});
-		});
+		}));
 
-		// for each seller, for each partId, this returns the total available 
-		// quantity of items, whatever the price (this is a simplification to
-		// apply the simplex, otherwise alternative prices would create
-		// more equations in the system as if they were different sellers)
-		var quantities = sellers.map(function (sellerUsername) {
+		var m = sellers.map(function (sellerUsername) {
 			return partIds.map(function (partId) {
 				return _.filter(availability, function (a) {
 					return (a.sellerUsername === sellerUsername) && (a.partId == partId);
@@ -69,30 +63,27 @@ module.exports = function (options) {
 					return memo + parseInt(a.quantity);
 				}, 0);
 			});
-		});
+		}).reduce(function (memo, x) {
+			return memo.concat(x);
+		}, [ ]);
 
-		// for each partId available on the market, this returns how many 
-		// bricks I need
-		// note that:
-		// a) I ignore the requirement for pieces that are not available, as
-        //    there is no solution to that
-		// b) I support the case where a requirement for the same partId
-		//    is expressed in more than one record, it is not supposed to 
-		//    happen in theory
-		var requirement = partIds.map(function (partId) {
+		var r = partIds.map(function (partId) {
 			return partsList.reduce(function (memo, p) {
 				if (p.partId === partId) memo += parseInt(p.quantity);
 				return memo;
 			}, 0);
 		});
 
-		console.log("sellers: ", sellers.slice(0, 5));
-		console.log("minBuy: ", minBuy.slice(0, 5));
-		console.log("partIds: ", partIds.slice(0, 5));
-		console.log("requirement: ", requirement.slice(0, 5));
-		console.log("for seller " + sellers[1]);
-		console.log(quantities[1].slice(0, 10));
-		console.log(prices[1].slice(0, 10));
+		console.log(M, N);
+		/*
+		// assembling A...
+		var A = mathjs.matrix();
+		// the top left corner's eyes
+		for (var i = 0; i < M; i++) 
+			A.subset(mathjs.index([0, N], [i * N, (i + 1) * N]), mathjs.eye(N));
+		// the big two eyes underneath
+		A.subset(mathjs.index([N, N + M * N], [0,  M * N]), mathjs.eye(M * N));
+		*/
 
 		return { };
 
