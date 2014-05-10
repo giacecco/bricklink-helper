@@ -3,7 +3,11 @@
    running the simplex algorithm.
    ************************************************************************** */
 
-var _ = require('underscore');
+var mathjs = require('mathjs'),
+	// Iain Dunning's SimplexJS library https://github.com/IainNZ/SimplexJS ,
+	// adapted to work as a NodeJS module
+	SimplexJS = require('./SimplexJS'),
+	_ = require('underscore');
 
 module.exports = function (options) {
 
