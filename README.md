@@ -22,7 +22,7 @@ The second approach, potentially optimal, is looking at the problem as a pure [i
 
 ** THIS CHAPTER IS WORK IN PROGRESS **
 
-Read [Wikipedia's description of the simplex algorithm](http://en.wikipedia.org/wiki/Simplex_algorithm) first. The first objective is describing the problem in "standard form", but I need to take a few assumptions first: 
+Read [Wikipedia's description of the simplex algorithm](http://en.wikipedia.org/wiki/Simplex_algorithm) first. The first objective is describing the problem in its standard components, but I need to take a few assumptions first: 
 
 - **I will rely on UK sellers only**, shipping to UK buyers (myself).
 
@@ -77,7 +77,7 @@ Where:
 
 which translates in an *A* that looks like this:
 
-![](docs/images/006.gif)
+![](docs/images/006.png)
 
 More to come...
 
