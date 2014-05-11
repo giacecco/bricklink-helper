@@ -87,7 +87,7 @@ My favourite programming environment for developing contraptions like this is No
 
 I could have put custom, more memory-efficient matrix manipulation libraries to the test, and I gave [Math.js](http://mathjs.org/) a shot, but had the same identical problem. The most natural thing to do was then to integrate the NodeJS code I had already written with my favourite programming environment for data science: R.
 
-CRAN's ["task view" on optimisation and mathematical programming](http://cran.r-project.org/web/views/Optimization.html) lists many options. The most obvious choice was [linprog](http://cran.r-project.org/web/packages/linprog/index.html).
+CRAN's ["task view" on optimisation and mathematical programming](http://cran.r-project.org/web/views/Optimization.html) lists many options. The most obvious choice was [linprog](http://cran.r-project.org/web/packages/linprog/index.html), that is a wrapper to the [lp_solve library](https://groups.yahoo.com/neo/groups/lp_solve/info).
 
 ##Licence
 

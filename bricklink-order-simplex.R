@@ -26,14 +26,18 @@ M <- length(sellers_reference)
 # elements of the integer linear programming problem as required to get to 
 # standard form and apply the simplex algorithm.
 
-# 'c' is a quite reserved word in R! :-)
-c_ <- t(as.vector(sapply(sellers_reference, function (seller_username) {
+# prices is a matrix witn one row for each seller and one column for each part 
+# id
+prices <- t(sapply(sellers_reference, function (seller_username) {
     return(sapply(part_id_reference, function (part_id) {
         prices_per_seller <- availability[(availability$sellerUsername == seller_username) & 
-                                          (availability$partId == part_id), ]$price
-        return(if (length(prices_per_seller) == 0) 0 else max(prices_per_seller))
+                                              (availability$partId == part_id), ]$price
+        return(if (length(prices_per_seller) == 0) 0. else max(prices_per_seller))
     }, USE.NAMES = FALSE))
-}, USE.NAMES = FALSE)))
+}, USE.NAMES = FALSE))
+
+# 'c' is a quite reserved word in R! :-)
+c_ <- t(as.vector(t(prices)))
 
 r <- sapply(part_id_reference, function (part_id) {
     q <- sum(parts_list[parts_list$partId == part_id, c("quantity")])
@@ -59,7 +63,7 @@ A3 <- matrix(nrow = M, ncol = 0)
 for(x in seq(M)) {
     A3 <- cbind(A3, rbind(
         matrix(0, nrow = x - 1, ncol = N),    
-        matrix(1, nrow = 1, ncol = N),    
+        prices[x, ],    
         matrix(0, nrow = M - x, ncol = N)    
     ))
 }
@@ -67,4 +71,7 @@ for(x in seq(M)) {
 A <- rbind(A1, A2, A3)
 rm(A1, A2, A3)
 
-solveLP(c_, b, A, const.dir = c(rep("==", N), rep("<=", N * M), rep(">=", M)), lpSolve = TRUE)
+solveLP(c_, b, A, 
+        maximum = FALSE, 
+        const.dir = c(rep("==", N), rep("<=", N * M), rep(">=", M)), 
+        lpSolve = TRUE)
