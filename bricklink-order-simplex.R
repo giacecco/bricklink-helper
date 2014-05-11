@@ -31,16 +31,18 @@ c_ <- t(as.vector(sapply(sellers_reference, function (seller_username) {
     return(sapply(part_id_reference, function (part_id) {
         prices_per_seller <- availability[(availability$sellerUsername == seller_username) & 
                                           (availability$partId == part_id), ]$price
-        return(if (length(prices_per_seller) == 0) NA else max(prices_per_seller))
+        return(if (length(prices_per_seller) == 0) 0 else max(prices_per_seller))
     }, USE.NAMES = FALSE))
 }, USE.NAMES = FALSE)))
 
 r <- sapply(part_id_reference, function (part_id) {
-    return(sum(parts_list[parts_list$partId == part_id, c("quantity")]))    
+    q <- sum(parts_list[parts_list$partId == part_id, c("quantity")])
+    return(if(!is.na(q)) q else 0)    
 })
 
 v <- sapply(sellers_reference, function (seller_username) {
-    return(availability[availability$sellerUsername == seller_username, c("minBuy")][1])
+    minBuy <- availability[availability$sellerUsername == seller_username, c("minBuy")][1]
+    return(if(!is.na(minBuy)) minBuy else 0)
 }, USE.NAMES = FALSE)
 
 b <- c(c_, r, v)
