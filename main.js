@@ -4,7 +4,6 @@ var argv = require('yargs')
 	async = require('async'),
 	csv = require('csv'),
 	fs = require('fs'),
-	path = require('path'),
 	_ = require('underscore'),
 	bricklinkSearch = new require('./bricklink-search')({ 'debug': true }),
 	bricklinkOrder = new require('./bricklink-order-simplex')();
@@ -43,9 +42,11 @@ var writeOrders = function(orders, callback) {
 readPartsList(argv.in, function (err, partsList) {
 
 	function makeOrder() {
-		writeOrders(bricklinkOrder.makeOrder(partsList, availability), function (err) {
-			console.log("Finished.");
-		});
+		bricklinkOrder.makeOrder(partsList, availability, function (orders, err) {
+			writeOrders(orders, function (err) {
+				console.log("Finished.");
+			});		
+		})
 	}
 
 	var availability;
