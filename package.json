@@ -12,8 +12,7 @@
     "csv": "0.3.7",
     "request": "2.34.0",
     "underscore": "1.6.0",
-    "yargs": "1.2.1",
-    "mathjs": "0.21.0"
+    "yargs": "1.2.1"
   },
   "devDependencies": {},
   "repository": {

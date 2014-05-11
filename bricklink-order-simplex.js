@@ -5,11 +5,7 @@
    https://github.com/Digital-Contraptions-Imaginarium/bricklink-helper/blob/master/README.md
    ************************************************************************** */
 
-var mathjs = require('mathjs')(),
-	// Iain Dunning's SimplexJS library https://github.com/IainNZ/SimplexJS ,
-	// adapted to work as a NodeJS module
-	SimplexJS = require('./SimplexJS'),
-	_ = require('underscore');
+var _ = require('underscore');
 
 module.exports = function (options) {
 
@@ -42,7 +38,7 @@ module.exports = function (options) {
 			return temp ? parseFloat(temp) : 0.;
 		});
 
-		var p = mathjs.matrix(sellers.map(function (sellerUsername) {
+		var p = sellers.map(function (sellerUsername) {
 			return partIds.map(function (partId) {
 				var temp = _.filter(availability, function (a) {
 						return (a.sellerUsername === sellerUsername) && (a.partId === partId);
@@ -53,7 +49,7 @@ module.exports = function (options) {
 					});
 				return temp.length > 0 ? temp[0] : 0.;
 			});
-		}));
+		});
 
 		var m = sellers.map(function (sellerUsername) {
 			return partIds.map(function (partId) {
@@ -74,16 +70,19 @@ module.exports = function (options) {
 			}, 0);
 		});
 
-		console.log(M, N);
-		/*
-		// assembling A...
-		var A = mathjs.matrix();
-		// the top left corner's eyes
-		for (var i = 0; i < M; i++) 
-			A.subset(mathjs.index([0, N], [i * N, (i + 1) * N]), mathjs.eye(N));
-		// the big two eyes underneath
-		A.subset(mathjs.index([N, N + M * N], [0,  M * N]), mathjs.eye(M * N));
-		*/
+		var createMatrix = function (dimensions, defaultValue) {
+			dimensions = [ ].concat(dimensions);
+			if (dimensions.length === 0) {
+				return defaultValue || 0;
+			} else {
+				return _.range(dimensions[0]).map(function () { return createMatrix(_.rest(dimensions), defaultValue); });
+			}
+		}
+
+		var A = createMatrix([ M * N + M + N, 2 * M * N + M ]);
+		console.log(M * N + M + N, 2 * M * N + M);
+		console.log(A.length, A[0]);
+
 
 		return { };
 
