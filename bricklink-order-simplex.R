@@ -1,3 +1,9 @@
+# Install and load any required packages
+.requiredPackages <- c("linprog")
+.packagesToInstall <- setdiff(.requiredPackages, installed.packages())
+if (length(.packagesToInstall) > 0) install.packages(.packagesToInstall)
+sapply(.requiredPackages, require, character.only = TRUE)
+
 # Read the data from the exchange folder.
 args <- commandArgs(trailingOnly = TRUE)
 parts_list <- read.csv(if (!is.na(args[1])) args[1] else ".r-exchange/partsList.csv", stringsAsFactors = FALSE)
@@ -6,6 +12,8 @@ availability <- read.csv(if (!is.na(args[2])) args[2] else ".r-exchange/availabi
 # Create the reference part id list. Note that I ignore both:
 # a) the requirement for part ids that are not available on the market, and
 # b) the availability of part ids that are not a requirement
+# TODO: did I find a suitable place to warn the user about the parts that
+#       could not be found on the market? 
 part_id_reference <- sort(intersect(unique(availability$partId), unique(parts_list$partId)))
 
 # Create the reference seller list. Note that I ignore the availability of 
@@ -16,7 +24,7 @@ sellers_reference <- sort(unique(availability[availability$partId %in% part_id_r
 # elements of the integer linear programming problem as required to get to 
 # standard form and apply the simplex algorithm.
 
-# 'c' is a reserved word in R :-)
+# 'c' is a quite reserved word in R! :-)
 c_ <- as.vector(sapply(sellers_reference, function (seller_username) {
     return(sapply(part_id_reference, function (part_id) {
         prices_per_seller <- availability[(availability$sellerUsername == seller_username) & 

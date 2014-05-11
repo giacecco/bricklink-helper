@@ -1,4 +1,5 @@
 node_modules
-*.Rproj*
+*.R*
 .r-exchange
 projects
+.Rproj.user
