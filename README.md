@@ -1,5 +1,9 @@
 #bricklink-helper
 
+This is how LEGO projects grind to a halt if you order your bricks by hand...
+
+![](docs/images/photo1.jpg)
+
 ##Introduction
 
 The idea came when I tried to build one of [Chris McVeigh's beautiful Lego designs](http://chrismcveigh.com/cm/building_guides_-_technology.html). I was already a regular user of [BrickLink](http://www.bricklink.com/) but never faced the problem of a) finding less common Lego parts and/or b) doing that often, when it becomes a substantial volume of work. I thought that it would have been useful to automate as much as possible of the process taking me from the building instructions to the actual orders, spending as little time and money in the process.
@@ -74,6 +78,10 @@ Where:
 which translates in an *A* that looks like this:
 
 ![](docs/images/006.gif)
+
+More to come...
+
+##The tools
 
 More to come...
 
