@@ -72,7 +72,7 @@ Where:
   
   ![](docs/images/004.gif)
   
-  where *m<sub>i,j</sub>* is the *i-th* seller's availability of the *j-th* part ("m" as in “max” number of bricks) .
+  where *m<sub>i,j</sub>* is the *i-th* seller's availability of the *j-th* part ("m" as in max number of bricks) .
 
 - Third, the *i-th* seller has the faculty not to accept orders whose value is smaller than *v<sub>i</sub>*. Note that this is a **conditional constraint**, and adds a whole new layer of complication to the maths of the problem.
   

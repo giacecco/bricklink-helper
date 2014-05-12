@@ -65,8 +65,6 @@ v <- sapply(sellers_reference, function (seller_username) {
 }, USE.NAMES = FALSE)
 
 b <- c(r, m, rep(T, M), v)
-# linprog wanted this vector as one of the input parameters, Rsymphony may be
-# different though
 constraints <- c(rep("==", N), rep("<=", N * M), rep("<=", M), rep(">=", M))
 
 # Start assembling the A matrix.  
@@ -110,5 +108,6 @@ solution <- Rsymphony_solve_LP(
     mat = A,
     dir = constraints,
     rhs = b,
-    types = c(rep("I", N), rep("B", M))
+    max = FALSE,
+    types = c(rep("I", N * M), rep("B", M))
 )
