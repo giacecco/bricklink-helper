@@ -26,6 +26,18 @@ M <- length(sellers_reference)
 # elements of the integer linear programming problem as required to get to 
 # standard form and apply the simplex algorithm.
 
+# quantities is a matrix with one row for each seller and one column for each 
+# part id
+quantities <- t(sapply(sellers_reference, function (seller_username) {
+    return(sapply(part_id_reference, function (part_id) {
+        quantities_per_seller <- availability[(availability$sellerUsername == seller_username) & 
+                                          (availability$partId == part_id), c("quantity")]
+        return(if (length(quantities_per_seller) == 0) 0 else sum(quantities_per_seller))
+    }, USE.NAMES = FALSE))
+}, USE.NAMES = FALSE))
+
+m <- as.vector(t(quantities))
+
 # prices is a matrix witn one row for each seller and one column for each part 
 # id
 prices <- t(sapply(sellers_reference, function (seller_username) {
@@ -52,30 +64,37 @@ v <- sapply(sellers_reference, function (seller_username) {
     return(if(!is.na(minBuy)) minBuy else 0)
 }, USE.NAMES = FALSE)
 
-b <- c(c_, r, v)
+b <- c(r, m, rep(0, M), rep(1, M), rep(T, M), v)
+# linprog wanted this vector as one of the input parameters, Rsymphony may be
+# different though
+constraints <- c(rep("==", N), rep("<=", N * M), rep(">=", M), rep("<=", M), rep("<=", M), rep(">=", M))
 
 # Start assembling the A matrix.  
-# 1st group of rows
+
+# 1st group of rows (see in the documentation what I call 1st, 2nd etc.)
 A1 <- matrix(nrow = N, ncol = 0)
 for(x in seq(M)) A1 <- cbind(A1, diag(1, N))
 A1 <- cbind(A1, matrix(0, nrow = N, ncol = M))
+
 # 2nd group of rows
 A2 <- cbind(diag(1, N * M), matrix(0, nrow = N * M, ncol = M))
+
 # 3rd group of rows
-A3bottom <- matrix(nrow = M, ncol = 0)
+A3 <- matrix(nrow = M, ncol = 0)
 for(x in seq(M)) {
-    A3bottom <- cbind(A3bottom, rbind(
+    A3 <- cbind(A3, rbind(
         matrix(0, nrow = x - 1, ncol = N),    
         matrix(1, nrow = 1, ncol = N),    
         matrix(0, nrow = M - x, ncol = N)    
     ))
 }
-A3bottom <- cbind(A3bottom, diag(T, M))
+A3 <- cbind(A3, diag(T, M))
 A3 <- rbind(
     cbind(matrix(0, nrow = M, ncol = N * M), diag(1, M)),
     cbind(matrix(0, nrow = M, ncol = N * M), diag(1, M)),
-    A3bottom    
+    A3  
 )
+
 # 4th group of rows
 A4 <- matrix(nrow = M, ncol = 0)
 for(x in seq(M)) {
@@ -85,14 +104,10 @@ for(x in seq(M)) {
         matrix(0, nrow = M - x, ncol = N)    
     ))
 }
-# something wrong in the multiplication below, I get a vector rather than a 
-# square matrix
-A4 <- cbind(A4, t(v) %*% diag(1, M))
+A4 <- cbind(A4, diag(v, M))
+
 # all together now!
 A <- rbind(A1, A2, A3, A4)
-rm(A1, A2, A3, A3bottom, A4)
+rm(A1, A2, A3, A4)
 
-solveLP(c_, b, A, 
-        maximum = FALSE, 
-        const.dir = c(rep("==", N), rep("<=", N * M), rep(">=", M)), 
-        lpSolve = TRUE)
+# ... waiting for SYMPHONY to successfully compile :-(
