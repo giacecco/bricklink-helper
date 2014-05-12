@@ -78,9 +78,11 @@ Where:
 
   [AIMMS](http://business.aimms.com/) kindly offers for download the "Integer Programming Tricks" chapter from their "Modelling Guide" book. [Section 7.4](http://www.aimms.com/aimms/download/manuals/aimms3om_integerprogrammingtricks.pdf) describes how to transform conditional constraints into normal constraints. We need to:
 
-  - introduce a binary variable *y<sub>i</sub>*, representing if we're ordering (0) or not (1) from the *i-th* seller:
+  - introduce binary variables *y<sub>i</sub>*, representing if we're ordering (0) or not (1) from the *i-th* seller:
 
     ![](docs/images/011.gif)
+
+    For simplicity, in the following I won't show the constraints that make the *y*'s binary, in the same way I am not showing that the *x*'s are >= 0.
 
   - make the original conditional constraint into the following:
 
