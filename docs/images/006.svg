@@ -97,10 +97,10 @@
    </g>
   </g>
   <g id="Drawing_4">
-   <path fill="rgb(207,231,245)" stroke="none" d="M 19945,26817 L 19580,26817 19580,24000 20310,24000 20310,26817 19945,26817 Z"/>
-   <path fill="none" stroke="rgb(128,128,128)" stroke-linejoin="round" d="M 19945,26817 L 19580,26817 19580,24000 20310,24000 20310,26817 19945,26817 Z"/>
+   <path fill="rgb(207,231,245)" stroke="none" d="M 19945,21017 L 19580,21017 19580,18200 20310,18200 20310,21017 19945,21017 Z"/>
+   <path fill="none" stroke="rgb(128,128,128)" stroke-linejoin="round" d="M 19945,21017 L 19580,21017 19580,18200 20310,18200 20310,21017 19945,21017 Z"/>
    <g fill="rgb(0,0,0)" stroke="none" font-family="Times New Roman embedded" font-size="635" font-style="normal" font-weight="400">
-    <text x="19786" y="25624">v</text>
+    <text x="19786" y="19824">v</text>
    </g>
   </g>
   <g id="Drawing_5">
@@ -110,7 +110,7 @@
    </g>
   </g>
   <g>
-   <path fill="none" stroke="rgb(0,0,0)" id="Drawing_6_0" stroke-linejoin="round" stroke-dasharray="508,508,508,508" d="M 5800,23500 L 27300,23500"/>
+   <path fill="none" stroke="rgb(0,0,0)" id="Drawing_6_0" stroke-linejoin="round" stroke-dasharray="508,508,508,508" d="M 5800,17700 L 27300,17700"/>
   </g>
   <g id="Drawing_7">
    <rect fill="none" stroke="none" x="17481" y="4500" width="897" height="2760"/>
@@ -127,9 +127,9 @@
    </g>
   </g>
   <g id="Drawing_9">
-   <rect fill="none" stroke="none" x="17000" y="24800" width="2460" height="1506"/>
+   <rect fill="none" stroke="none" x="17000" y="19000" width="2460" height="1506"/>
    <g fill="rgb(0,0,0)" stroke="none" font-family="Times New Roman embedded" font-size="1129" font-style="normal" font-weight="400">
-    <text x="17250" y="25933">
+    <text x="17250" y="20133">
      <tspan x="17250 17885">&gt;=</tspan></text>
    </g>
   </g>
@@ -154,101 +154,49 @@
    </g>
   </g>
   <g id="Drawing_12">
-   <rect fill="none" stroke="none" x="21100" y="24505" width="5945" height="4368"/>
+   <rect fill="none" stroke="none" x="21100" y="18705" width="5945" height="2096"/>
    <g fill="rgb(0,0,0)" stroke="none" font-family="Arial embedded" font-size="529" font-style="normal" font-weight="400">
-    <text x="21350" y="25108">
+    <text x="21350" y="19308">
      <tspan x="21350 21879">… </tspan></text>
-    <text fill="rgb(0,0,0)" stroke="none" x="22027" y="25108">
+    <text fill="rgb(0,0,0)" stroke="none" x="22027" y="19308">
      <tspan x="22027 22319 22615 22908 23056 23234 23526 23792 24084 24381 24643 24791 24910 25202 25498 25642 25790 26087 26379">and respecting the </tspan></text>
-    <text fill="rgb(0,0,0)" stroke="none" x="21350" y="25696">
+    <text fill="rgb(0,0,0)" stroke="none" x="21350" y="19896">
      <tspan x="21350 21612 21909 22027 22146 22438 22616 22878 22980 23128 23568 23687 23979 24097 24538 24830 25270 25418 25715 25888 26184 26477 26654">sellers&apos; minimum order </tspan></text>
-    <text fill="rgb(0,0,0)" stroke="none" x="21350" y="26284">
+    <text fill="rgb(0,0,0)" stroke="none" x="21350" y="20484">
      <tspan x="21350 21612 21909 22027 22319 22616">value.</tspan></text>
    </g>
   </g>
   <g id="Drawing_13">
-   <path fill="rgb(207,231,245)" stroke="none" d="M 19945,17137 L 19580,17137 19580,14337 20310,14337 20310,17137 19945,17137 Z"/>
-   <path fill="none" stroke="rgb(128,128,128)" stroke-linejoin="round" d="M 19945,17137 L 19580,17137 19580,14337 20310,14337 20310,17137 19945,17137 Z"/>
-   <g fill="rgb(0,0,0)" stroke="none" font-family="Times New Roman embedded" font-size="635" font-style="normal" font-weight="400">
-    <text x="19786" y="15953">0</text>
+   <rect fill="none" stroke="none" x="17000" y="15095" width="2460" height="1506"/>
+   <g fill="rgb(0,0,0)" stroke="none" font-family="Times New Roman embedded" font-size="1129" font-style="normal" font-weight="400">
+    <text x="17250" y="16228">
+     <tspan x="17250 17885">&lt;=</tspan></text>
    </g>
   </g>
   <g id="Drawing_14">
-   <path fill="rgb(207,231,245)" stroke="none" d="M 19945,20086 L 19580,20086 19580,17286 20310,17286 20310,20086 19945,20086 Z"/>
-   <path fill="none" stroke="rgb(128,128,128)" stroke-linejoin="round" d="M 19945,20086 L 19580,20086 19580,17286 20310,17286 20310,20086 19945,20086 Z"/>
-   <g fill="rgb(0,0,0)" stroke="none" font-family="Times New Roman embedded" font-size="635" font-style="normal" font-weight="400">
-    <text x="19786" y="18902">1</text>
-   </g>
-  </g>
-  <g id="Drawing_15">
-   <rect fill="none" stroke="none" x="17000" y="14995" width="2460" height="1506"/>
-   <g fill="rgb(0,0,0)" stroke="none" font-family="Times New Roman embedded" font-size="1129" font-style="normal" font-weight="400">
-    <text x="17250" y="16128">
-     <tspan x="17250 17885">&gt;=</tspan></text>
-   </g>
-  </g>
-  <g id="Drawing_16">
-   <rect fill="none" stroke="none" x="17000" y="20895" width="2460" height="1506"/>
-   <g fill="rgb(0,0,0)" stroke="none" font-family="Times New Roman embedded" font-size="1129" font-style="normal" font-weight="400">
-    <text x="17250" y="22028">
-     <tspan x="17250 17885">&lt;=</tspan></text>
-   </g>
-  </g>
-  <g id="Drawing_17">
-   <rect fill="none" stroke="none" x="21557" y="17362" width="5444" height="5544"/>
+   <rect fill="none" stroke="none" x="21557" y="14462" width="5444" height="2839"/>
    <g fill="rgb(0,0,0)" stroke="none" font-family="Arial embedded" font-size="529" font-style="normal" font-weight="400">
-    <text x="21807" y="17965">
+    <text x="21807" y="15065">
      <tspan x="21807 22336">… </tspan></text>
-    <text fill="rgb(0,0,0)" stroke="none" x="22484" y="17965">
+    <text fill="rgb(0,0,0)" stroke="none" x="22484" y="15065">
      <tspan x="22484 22865 22984 23132 23424 23572 23720 24012 24309">with the </tspan></text>
-    <text fill="rgb(0,0,0)" stroke="none" x="21807" y="18553">
+    <text fill="rgb(0,0,0)" stroke="none" x="21807" y="15653">
      <tspan x="21807 22069 22366 22658 22954 23073 23217 23335 23632 23924 24220 24334">conditional </tspan></text>
-    <text fill="rgb(0,0,0)" stroke="none" x="21807" y="19141">
+    <text fill="rgb(0,0,0)" stroke="none" x="21807" y="16241">
      <tspan x="21807 22069 22366 22658 22925 23073 23246 23543 23661 23953 24101 24364">constraints </tspan></text>
-    <text fill="rgb(0,0,0)" stroke="none" x="21807" y="19729">
+    <text fill="rgb(0,0,0)" stroke="none" x="21807" y="16829">
      <tspan x="21807 21955 22129 22425 22717 22984 23132 23424 23602 24042 24334 24482 24601 24893 25189 25333 25482 25659 25778 26040 26303 26451 26599">transformation trick...</tspan></text>
    </g>
   </g>
-  <g id="Drawing_18">
-   <path fill="rgb(207,231,245)" stroke="none" d="M 19945,23052 L 19580,23052 19580,20235 20310,20235 20310,23052 19945,23052 Z"/>
-   <path fill="none" stroke="rgb(128,128,128)" stroke-linejoin="round" d="M 19945,23052 L 19580,23052 19580,20235 20310,20235 20310,23052 19945,23052 Z"/>
+  <g id="Drawing_15">
+   <path fill="rgb(207,231,245)" stroke="none" d="M 19945,17252 L 19580,17252 19580,14435 20310,14435 20310,17252 19945,17252 Z"/>
+   <path fill="none" stroke="rgb(128,128,128)" stroke-linejoin="round" d="M 19945,17252 L 19580,17252 19580,14435 20310,14435 20310,17252 19945,17252 Z"/>
    <g fill="rgb(0,0,0)" stroke="none" font-family="Times New Roman embedded" font-size="635" font-style="normal" font-weight="400">
-    <text x="19750" y="21859">T</text>
-   </g>
-  </g>
-  <g id="Drawing_19">
-   <rect fill="none" stroke="none" x="17000" y="17900" width="2460" height="1506"/>
-   <g fill="rgb(0,0,0)" stroke="none" font-family="Times New Roman embedded" font-size="1129" font-style="normal" font-weight="400">
-    <text x="17250" y="19033">
-     <tspan x="17250 17885">&lt;=</tspan></text>
+    <text x="19750" y="16059">T</text>
    </g>
   </g>
   <g id="DrawingGroup_1">
-   <g id="Drawing_20">
-    <path fill="rgb(207,231,245)" stroke="none" d="M 9857,20103 L 6407,20103 6407,17303 13307,17303 13307,20103 9857,20103 Z"/>
-    <path fill="none" stroke="rgb(128,128,128)" stroke-linejoin="round" d="M 9857,20103 L 6407,20103 6407,17303 13307,17303 13307,20103 9857,20103 Z"/>
-    <g fill="rgb(0,0,0)" stroke="none" font-family="Times New Roman embedded" font-size="635" font-style="normal" font-weight="400">
-     <text x="9146" y="18815">0</text>
-    </g>
-    <g fill="rgb(0,0,0)" stroke="none" font-family="Times New Roman embedded" font-size="368" font-style="normal" font-weight="400">
-     <text x="9464" y="19081">
-      <tspan x="9464 9790 9976 10302">MxMN</tspan></text>
-    </g>
-   </g>
-   <g id="Drawing_21">
-    <path fill="rgb(207,231,245)" stroke="none" d="M 14846,20103 L 13446,20103 13446,17303 16246,17303 16246,20103 14846,20103 Z"/>
-    <path fill="none" stroke="rgb(128,128,128)" stroke-linejoin="round" d="M 14846,20103 L 13446,20103 13446,17303 16246,17303 16246,20103 14846,20103 Z"/>
-    <g fill="rgb(0,0,0)" stroke="none" font-family="Times New Roman embedded" font-size="635" font-style="normal" font-weight="400">
-     <text x="14321" y="18815">I</text>
-    </g>
-    <g fill="rgb(0,0,0)" stroke="none" font-family="Times New Roman embedded" font-size="368" font-style="normal" font-weight="400">
-     <text x="14533" y="19081">
-      <tspan x="14533 14859 15045">MxM</tspan></text>
-    </g>
-   </g>
-  </g>
-  <g id="DrawingGroup_2">
-   <g id="Drawing_22">
+   <g id="Drawing_16">
     <path fill="rgb(207,231,245)" stroke="none" d="M 9857,13627 L 6407,13627 6407,6906 13307,6906 13307,13627 9857,13627 Z"/>
     <path fill="none" stroke="rgb(128,128,128)" stroke-linejoin="round" d="M 9857,13627 L 6407,13627 6407,6906 13307,6906 13307,13627 9857,13627 Z"/>
     <g fill="rgb(0,0,0)" stroke="none" font-family="Times New Roman embedded" font-size="635" font-style="normal" font-weight="400">
@@ -263,7 +211,7 @@
      <text x="10566" y="10378"> </text>
     </g>
    </g>
-   <g id="Drawing_23">
+   <g id="Drawing_17">
     <path fill="rgb(207,231,245)" stroke="none" d="M 14846,13616 L 13446,13616 13446,6916 16246,6916 16246,13616 14846,13616 Z"/>
     <path fill="none" stroke="rgb(128,128,128)" stroke-linejoin="round" d="M 14846,13616 L 13446,13616 13446,6916 16246,6916 16246,13616 14846,13616 Z"/>
     <g fill="rgb(0,0,0)" stroke="none" font-family="Times New Roman embedded" font-size="635" font-style="normal" font-weight="400">
@@ -275,9 +223,9 @@
     </g>
    </g>
   </g>
-  <g id="DrawingGroup_3">
-   <g id="DrawingGroup_4">
-    <g id="Drawing_24">
+  <g id="DrawingGroup_2">
+   <g id="DrawingGroup_3">
+    <g id="Drawing_18">
      <path fill="rgb(207,231,245)" stroke="none" d="M 7217,6068 L 6407,6068 6407,4449 8026,4449 8026,6068 7217,6068 Z"/>
      <path fill="none" stroke="rgb(128,128,128)" stroke-linejoin="round" d="M 7217,6068 L 6407,6068 6407,4449 8026,4449 8026,6068 7217,6068 Z"/>
      <g fill="rgb(0,0,0)" stroke="none" font-family="Times New Roman embedded" font-size="635" font-style="normal" font-weight="400">
@@ -288,7 +236,7 @@
        <tspan x="6965 7232 7414">NxN</tspan></text>
      </g>
     </g>
-    <g id="Drawing_25">
+    <g id="Drawing_19">
      <path fill="rgb(207,231,245)" stroke="none" d="M 10739,6068 L 9930,6068 9930,4449 11547,4449 11547,6068 10739,6068 Z"/>
      <path fill="none" stroke="rgb(128,128,128)" stroke-linejoin="round" d="M 10739,6068 L 9930,6068 9930,4449 11547,4449 11547,6068 10739,6068 Z"/>
      <g fill="rgb(0,0,0)" stroke="none" font-family="Times New Roman embedded" font-size="635" font-style="normal" font-weight="400">
@@ -296,7 +244,7 @@
        <tspan x="10502 10663 10820">...</tspan></text>
      </g>
     </g>
-    <g id="Drawing_26">
+    <g id="Drawing_20">
      <path fill="rgb(207,231,245)" stroke="none" d="M 8978,6068 L 8168,6068 8168,4449 9788,4449 9788,6068 8978,6068 Z"/>
      <path fill="none" stroke="rgb(128,128,128)" stroke-linejoin="round" d="M 8978,6068 L 8168,6068 8168,4449 9788,4449 9788,6068 8978,6068 Z"/>
      <g fill="rgb(0,0,0)" stroke="none" font-family="Times New Roman embedded" font-size="635" font-style="normal" font-weight="400">
@@ -307,7 +255,7 @@
        <tspan x="8727 8994 9176">NxN</tspan></text>
      </g>
     </g>
-    <g id="Drawing_27">
+    <g id="Drawing_21">
      <path fill="rgb(207,231,245)" stroke="none" d="M 12498,6068 L 11689,6068 11689,4449 13307,4449 13307,6068 12498,6068 Z"/>
      <path fill="none" stroke="rgb(128,128,128)" stroke-linejoin="round" d="M 12498,6068 L 11689,6068 11689,4449 13307,4449 13307,6068 12498,6068 Z"/>
      <g fill="rgb(0,0,0)" stroke="none" font-family="Times New Roman embedded" font-size="635" font-style="normal" font-weight="400">
@@ -319,7 +267,7 @@
      </g>
     </g>
    </g>
-   <g id="Drawing_28">
+   <g id="Drawing_22">
     <path fill="rgb(207,231,245)" stroke="none" d="M 14846,6049 L 13446,6049 13446,4449 16246,4449 16246,6049 14846,6049 Z"/>
     <path fill="none" stroke="rgb(128,128,128)" stroke-linejoin="round" d="M 14846,6049 L 13446,6049 13446,4449 16246,4449 16246,6049 14846,6049 Z"/>
     <g fill="rgb(0,0,0)" stroke="none" font-family="Times New Roman embedded" font-size="635" font-style="normal" font-weight="400">
@@ -331,215 +279,191 @@
     </g>
    </g>
   </g>
-  <g id="DrawingGroup_5">
-   <g id="Drawing_29">
-    <path fill="rgb(207,231,245)" stroke="none" d="M 7217,23058 L 6407,23058 6407,20241 8026,20241 8026,23058 7217,23058 Z"/>
-    <path fill="none" stroke="rgb(128,128,128)" stroke-linejoin="round" d="M 7217,23058 L 6407,23058 6407,20241 8026,20241 8026,23058 7217,23058 Z"/>
+  <g id="DrawingGroup_4">
+   <g id="Drawing_23">
+    <path fill="rgb(207,231,245)" stroke="none" d="M 7217,17258 L 6407,17258 6407,14441 8026,14441 8026,17258 7217,17258 Z"/>
+    <path fill="none" stroke="rgb(128,128,128)" stroke-linejoin="round" d="M 7217,17258 L 6407,17258 6407,14441 8026,14441 8026,17258 7217,17258 Z"/>
     <g fill="rgb(0,0,0)" stroke="none" font-family="Times New Roman embedded" font-size="318" font-style="normal" font-weight="400">
-     <text x="6581" y="21230">
+     <text x="6581" y="15430">
       <tspan x="6581 6742 6818 6979 7059 7216 7296 7614 7694">1 1 1 … 1</tspan></text>
-     <text fill="rgb(0,0,0)" stroke="none" x="6581" y="21582">
+     <text fill="rgb(0,0,0)" stroke="none" x="6581" y="15782">
       <tspan x="6581 6742 6818 6979 7059 7216 7296 7614 7694">0 0 0 … 0</tspan></text>
-     <text fill="rgb(0,0,0)" stroke="none" x="7057" y="21934">…</text>
-     <text fill="rgb(0,0,0)" stroke="none" x="6581" y="22286">
+     <text fill="rgb(0,0,0)" stroke="none" x="7057" y="16134">…</text>
+     <text fill="rgb(0,0,0)" stroke="none" x="6581" y="16486">
       <tspan x="6581 6742 6818 6979 7059 7216 7296 7614 7694">0 0 0 … 0</tspan></text>
     </g>
    </g>
-   <g id="Drawing_30">
-    <path fill="rgb(207,231,245)" stroke="none" d="M 8977,23058 L 8167,23058 8167,20241 9787,20241 9787,23058 8977,23058 Z"/>
-    <path fill="none" stroke="rgb(128,128,128)" stroke-linejoin="round" d="M 8977,23058 L 8167,23058 8167,20241 9787,20241 9787,23058 8977,23058 Z"/>
+   <g id="Drawing_24">
+    <path fill="rgb(207,231,245)" stroke="none" d="M 8977,17258 L 8167,17258 8167,14441 9787,14441 9787,17258 8977,17258 Z"/>
+    <path fill="none" stroke="rgb(128,128,128)" stroke-linejoin="round" d="M 8977,17258 L 8167,17258 8167,14441 9787,14441 9787,17258 8977,17258 Z"/>
     <g fill="rgb(0,0,0)" stroke="none" font-family="Times New Roman embedded" font-size="318" font-style="normal" font-weight="400">
-     <text x="8342" y="21230">
+     <text x="8342" y="15430">
       <tspan x="8342 8503 8579 8740 8820 8977 9057 9375 9455">0 0 0 … 0</tspan></text>
-     <text fill="rgb(0,0,0)" stroke="none" x="8342" y="21582">
+     <text fill="rgb(0,0,0)" stroke="none" x="8342" y="15782">
       <tspan x="8342 8503 8579 8740 8820 8977 9057 9375 9455">1 1 1 … 1</tspan></text>
-     <text fill="rgb(0,0,0)" stroke="none" x="8818" y="21934">…</text>
-     <text fill="rgb(0,0,0)" stroke="none" x="8342" y="22286">
+     <text fill="rgb(0,0,0)" stroke="none" x="8818" y="16134">…</text>
+     <text fill="rgb(0,0,0)" stroke="none" x="8342" y="16486">
       <tspan x="8342 8503 8579 8740 8820 8977 9057 9375 9455">0 0 0 … 0</tspan></text>
     </g>
    </g>
-   <g id="Drawing_31">
-    <path fill="rgb(207,231,245)" stroke="none" d="M 12497,23058 L 11687,23058 11687,20241 13306,20241 13306,23058 12497,23058 Z"/>
-    <path fill="none" stroke="rgb(128,128,128)" stroke-linejoin="round" d="M 12497,23058 L 11687,23058 11687,20241 13306,20241 13306,23058 12497,23058 Z"/>
+   <g id="Drawing_25">
+    <path fill="rgb(207,231,245)" stroke="none" d="M 12497,17258 L 11687,17258 11687,14441 13306,14441 13306,17258 12497,17258 Z"/>
+    <path fill="none" stroke="rgb(128,128,128)" stroke-linejoin="round" d="M 12497,17258 L 11687,17258 11687,14441 13306,14441 13306,17258 12497,17258 Z"/>
     <g fill="rgb(0,0,0)" stroke="none" font-family="Times New Roman embedded" font-size="318" font-style="normal" font-weight="400">
-     <text x="11861" y="21230">
+     <text x="11861" y="15430">
       <tspan x="11861 12022 12098 12259 12339 12496 12576 12894 12974">0 0 0 … 0</tspan></text>
-     <text fill="rgb(0,0,0)" stroke="none" x="11861" y="21582">
+     <text fill="rgb(0,0,0)" stroke="none" x="11861" y="15782">
       <tspan x="11861 12022 12098 12259 12339 12496 12576 12894 12974">0 0 0 … 0</tspan></text>
-     <text fill="rgb(0,0,0)" stroke="none" x="12337" y="21934">…</text>
-     <text fill="rgb(0,0,0)" stroke="none" x="11861" y="22286">
+     <text fill="rgb(0,0,0)" stroke="none" x="12337" y="16134">…</text>
+     <text fill="rgb(0,0,0)" stroke="none" x="11861" y="16486">
       <tspan x="11861 12022 12098 12259 12339 12496 12576 12894 12974">1 1 1 … 1</tspan></text>
     </g>
    </g>
-   <g id="Drawing_32">
-    <path fill="rgb(207,231,245)" stroke="none" d="M 10737,23058 L 9928,23058 9928,20241 11545,20241 11545,23058 10737,23058 Z"/>
-    <path fill="none" stroke="rgb(128,128,128)" stroke-linejoin="round" d="M 10737,23058 L 9928,23058 9928,20241 11545,20241 11545,23058 10737,23058 Z"/>
+   <g id="Drawing_26">
+    <path fill="rgb(207,231,245)" stroke="none" d="M 10737,17258 L 9928,17258 9928,14441 11545,14441 11545,17258 10737,17258 Z"/>
+    <path fill="none" stroke="rgb(128,128,128)" stroke-linejoin="round" d="M 10737,17258 L 9928,17258 9928,14441 11545,14441 11545,17258 10737,17258 Z"/>
     <g fill="rgb(0,0,0)" stroke="none" font-family="Times New Roman embedded" font-size="776" font-style="normal" font-weight="400">
-     <text x="10447" y="21910">
+     <text x="10447" y="16110">
       <tspan x="10447 10642 10836">...</tspan></text>
     </g>
    </g>
-   <g id="Drawing_33">
-    <path fill="rgb(207,231,245)" stroke="none" d="M 14846,23063 L 13446,23063 13446,20263 16246,20263 16246,23063 14846,23063 Z"/>
-    <path fill="none" stroke="rgb(128,128,128)" stroke-linejoin="round" d="M 14846,23063 L 13446,23063 13446,20263 16246,20263 16246,23063 14846,23063 Z"/>
+   <g id="Drawing_27">
+    <path fill="rgb(207,231,245)" stroke="none" d="M 14846,17263 L 13446,17263 13446,14463 16246,14463 16246,17263 14846,17263 Z"/>
+    <path fill="none" stroke="rgb(128,128,128)" stroke-linejoin="round" d="M 14846,17263 L 13446,17263 13446,14463 16246,14463 16246,17263 14846,17263 Z"/>
     <g fill="rgb(0,0,0)" stroke="none" font-family="Times New Roman embedded" font-size="635" font-style="normal" font-weight="400">
-     <text x="14021" y="21775">T</text>
-     <text fill="rgb(0,0,0)" stroke="none" x="14410" y="21775">·</text>
-     <text fill="rgb(0,0,0)" stroke="none" x="14622" y="21775">I</text>
+     <text x="14021" y="15975">T</text>
+     <text fill="rgb(0,0,0)" stroke="none" x="14410" y="15975">·</text>
+     <text fill="rgb(0,0,0)" stroke="none" x="14622" y="15975">I</text>
     </g>
     <g fill="rgb(0,0,0)" stroke="none" font-family="Times New Roman embedded" font-size="368" font-style="normal" font-weight="400">
-     <text x="14834" y="22041">
+     <text x="14834" y="16241">
       <tspan x="14834 15160 15346">MxM</tspan></text>
     </g>
    </g>
   </g>
-  <g id="DrawingGroup_6">
-   <g id="Drawing_34">
-    <path fill="rgb(207,231,245)" stroke="none" d="M 7217,26817 L 6407,26817 6407,24000 8026,24000 8026,26817 7217,26817 Z"/>
-    <path fill="none" stroke="rgb(128,128,128)" stroke-linejoin="round" d="M 7217,26817 L 6407,26817 6407,24000 8026,24000 8026,26817 7217,26817 Z"/>
+  <g id="DrawingGroup_5">
+   <g id="Drawing_28">
+    <path fill="rgb(207,231,245)" stroke="none" d="M 7217,21017 L 6407,21017 6407,18200 8026,18200 8026,21017 7217,21017 Z"/>
+    <path fill="none" stroke="rgb(128,128,128)" stroke-linejoin="round" d="M 7217,21017 L 6407,21017 6407,18200 8026,18200 8026,21017 7217,21017 Z"/>
     <g fill="rgb(0,0,0)" stroke="none" font-family="Times New Roman embedded" font-size="247" font-style="normal" font-weight="400">
-     <text x="6492" y="25039">p</text>
+     <text x="6492" y="19239">p</text>
     </g>
     <g fill="rgb(0,0,0)" stroke="none" font-family="Times New Roman embedded" font-size="143" font-style="normal" font-weight="400">
-     <text x="6615" y="25143">
+     <text x="6615" y="19343">
       <tspan x="6615 6687 6721 6759">1, 1</tspan></text>
     </g>
     <g fill="rgb(0,0,0)" stroke="none" font-family="Times New Roman embedded" font-size="247" font-style="normal" font-weight="400">
-     <text x="6831" y="25039">
+     <text x="6831" y="19239">
       <tspan x="6831 6895"> p</tspan></text>
     </g>
     <g fill="rgb(0,0,0)" stroke="none" font-family="Times New Roman embedded" font-size="143" font-style="normal" font-weight="400">
-     <text x="7017" y="25143">
+     <text x="7017" y="19343">
       <tspan x="7017 7089 7123 7161">1, 2</tspan></text>
     </g>
     <g fill="rgb(0,0,0)" stroke="none" font-family="Times New Roman embedded" font-size="247" font-style="normal" font-weight="400">
-     <text x="7233" y="25039">
+     <text x="7233" y="19239">
       <tspan x="7233 7297 7542 7606"> … p</tspan></text>
     </g>
     <g fill="rgb(0,0,0)" stroke="none" font-family="Times New Roman embedded" font-size="143" font-style="normal" font-weight="400">
-     <text x="7728" y="25143">
+     <text x="7728" y="19343">
       <tspan x="7728 7800 7834">1,N</tspan></text>
     </g>
     <g fill="rgb(0,0,0)" stroke="none" font-family="Times New Roman embedded" font-size="247" font-style="normal" font-weight="400">
-     <text x="6723" y="25393">
+     <text x="6723" y="19593">
       <tspan x="6723 6846 6909 7032 7096 7218 7278 7527 7587">0 0 0 … 0</tspan></text>
-     <text fill="rgb(0,0,0)" stroke="none" x="7093" y="25668">…</text>
-     <text fill="rgb(0,0,0)" stroke="none" x="6723" y="25943">
+     <text fill="rgb(0,0,0)" stroke="none" x="7093" y="19868">…</text>
+     <text fill="rgb(0,0,0)" stroke="none" x="6723" y="20143">
       <tspan x="6723 6846 6909 7032 7096 7218 7278 7527 7587">0 0 0 … 0</tspan></text>
     </g>
    </g>
-   <g id="Drawing_35">
-    <path fill="rgb(207,231,245)" stroke="none" d="M 8975,26817 L 8165,26817 8165,24000 9785,24000 9785,26817 8975,26817 Z"/>
-    <path fill="none" stroke="rgb(128,128,128)" stroke-linejoin="round" d="M 8975,26817 L 8165,26817 8165,24000 9785,24000 9785,26817 8975,26817 Z"/>
+   <g id="Drawing_29">
+    <path fill="rgb(207,231,245)" stroke="none" d="M 8975,21017 L 8165,21017 8165,18200 9785,18200 9785,21017 8975,21017 Z"/>
+    <path fill="none" stroke="rgb(128,128,128)" stroke-linejoin="round" d="M 8975,21017 L 8165,21017 8165,18200 9785,18200 9785,21017 8975,21017 Z"/>
     <g fill="rgb(0,0,0)" stroke="none" font-family="Times New Roman embedded" font-size="247" font-style="normal" font-weight="400">
-     <text x="8482" y="25039">
+     <text x="8482" y="19239">
       <tspan x="8482 8605 8668 8791 8855 8977 9037 9286 9346">0 0 0 … 0</tspan></text>
-     <text fill="rgb(0,0,0)" stroke="none" x="8251" y="25314">p</text>
+     <text fill="rgb(0,0,0)" stroke="none" x="8251" y="19514">p</text>
     </g>
     <g fill="rgb(0,0,0)" stroke="none" font-family="Times New Roman embedded" font-size="143" font-style="normal" font-weight="400">
-     <text x="8374" y="25418">
+     <text x="8374" y="19618">
       <tspan x="8374 8446 8480 8518">2, 1</tspan></text>
     </g>
     <g fill="rgb(0,0,0)" stroke="none" font-family="Times New Roman embedded" font-size="247" font-style="normal" font-weight="400">
-     <text x="8590" y="25314">
+     <text x="8590" y="19514">
       <tspan x="8590 8654"> p</tspan></text>
     </g>
     <g fill="rgb(0,0,0)" stroke="none" font-family="Times New Roman embedded" font-size="143" font-style="normal" font-weight="400">
-     <text x="8776" y="25418">
+     <text x="8776" y="19618">
       <tspan x="8776 8848 8882 8920">2, 2</tspan></text>
     </g>
     <g fill="rgb(0,0,0)" stroke="none" font-family="Times New Roman embedded" font-size="247" font-style="normal" font-weight="400">
-     <text x="8992" y="25314">
+     <text x="8992" y="19514">
       <tspan x="8992 9056 9301 9365"> … p</tspan></text>
     </g>
     <g fill="rgb(0,0,0)" stroke="none" font-family="Times New Roman embedded" font-size="143" font-style="normal" font-weight="400">
-     <text x="9487" y="25418">
+     <text x="9487" y="19618">
       <tspan x="9487 9559 9593">2,N</tspan></text>
     </g>
     <g fill="rgb(0,0,0)" stroke="none" font-family="Times New Roman embedded" font-size="247" font-style="normal" font-weight="400">
-     <text x="8852" y="25668">…</text>
-     <text fill="rgb(0,0,0)" stroke="none" x="8482" y="25943">
+     <text x="8852" y="19868">…</text>
+     <text fill="rgb(0,0,0)" stroke="none" x="8482" y="20143">
       <tspan x="8482 8605 8668 8791 8855 8977 9037 9286 9346">0 0 0 … 0</tspan></text>
     </g>
    </g>
-   <g id="Drawing_36">
-    <path fill="rgb(207,231,245)" stroke="none" d="M 12491,26817 L 11681,26817 11681,24000 13300,24000 13300,26817 12491,26817 Z"/>
-    <path fill="none" stroke="rgb(128,128,128)" stroke-linejoin="round" d="M 12491,26817 L 11681,26817 11681,24000 13300,24000 13300,26817 12491,26817 Z"/>
+   <g id="Drawing_30">
+    <path fill="rgb(207,231,245)" stroke="none" d="M 12491,21017 L 11681,21017 11681,18200 13300,18200 13300,21017 12491,21017 Z"/>
+    <path fill="none" stroke="rgb(128,128,128)" stroke-linejoin="round" d="M 12491,21017 L 11681,21017 11681,18200 13300,18200 13300,21017 12491,21017 Z"/>
     <g fill="rgb(0,0,0)" stroke="none" font-family="Times New Roman embedded" font-size="247" font-style="normal" font-weight="400">
-     <text x="11998" y="25039">
+     <text x="11998" y="19239">
       <tspan x="11998 12121 12184 12307 12371 12493 12553 12802 12862">0 0 0 … 0</tspan></text>
-     <text fill="rgb(0,0,0)" stroke="none" x="11998" y="25314">
+     <text fill="rgb(0,0,0)" stroke="none" x="11998" y="19514">
       <tspan x="11998 12121 12184 12307 12371 12493 12553 12802 12862">0 0 0 … 0</tspan></text>
-     <text fill="rgb(0,0,0)" stroke="none" x="12368" y="25589">…</text>
-     <text fill="rgb(0,0,0)" stroke="none" x="11684" y="25864">p</text>
+     <text fill="rgb(0,0,0)" stroke="none" x="12368" y="19789">…</text>
+     <text fill="rgb(0,0,0)" stroke="none" x="11684" y="20064">p</text>
     </g>
     <g fill="rgb(0,0,0)" stroke="none" font-family="Times New Roman embedded" font-size="143" font-style="normal" font-weight="400">
-     <text x="11807" y="25968">
+     <text x="11807" y="20168">
       <tspan x="11807 11934 11968 12006">M, 1</tspan></text>
     </g>
     <g fill="rgb(0,0,0)" stroke="none" font-family="Times New Roman embedded" font-size="247" font-style="normal" font-weight="400">
-     <text x="12078" y="25864">
+     <text x="12078" y="20064">
       <tspan x="12078 12142"> p</tspan></text>
     </g>
     <g fill="rgb(0,0,0)" stroke="none" font-family="Times New Roman embedded" font-size="143" font-style="normal" font-weight="400">
-     <text x="12264" y="25968">
+     <text x="12264" y="20168">
       <tspan x="12264 12391 12425 12463">M, 2</tspan></text>
     </g>
     <g fill="rgb(0,0,0)" stroke="none" font-family="Times New Roman embedded" font-size="247" font-style="normal" font-weight="400">
-     <text x="12535" y="25864">
+     <text x="12535" y="20064">
       <tspan x="12535 12599 12844 12908"> … p</tspan></text>
     </g>
     <g fill="rgb(0,0,0)" stroke="none" font-family="Times New Roman embedded" font-size="143" font-style="normal" font-weight="400">
-     <text x="13030" y="25968">
+     <text x="13030" y="20168">
       <tspan x="13030 13157 13191">M,N</tspan></text>
     </g>
    </g>
-   <g id="Drawing_37">
-    <path fill="rgb(207,231,245)" stroke="none" d="M 10734,26817 L 9925,26817 9925,24000 11542,24000 11542,26817 10734,26817 Z"/>
-    <path fill="none" stroke="rgb(128,128,128)" stroke-linejoin="round" d="M 10734,26817 L 9925,26817 9925,24000 11542,24000 11542,26817 10734,26817 Z"/>
+   <g id="Drawing_31">
+    <path fill="rgb(207,231,245)" stroke="none" d="M 10734,21017 L 9925,21017 9925,18200 11542,18200 11542,21017 10734,21017 Z"/>
+    <path fill="none" stroke="rgb(128,128,128)" stroke-linejoin="round" d="M 10734,21017 L 9925,21017 9925,18200 11542,18200 11542,21017 10734,21017 Z"/>
     <g fill="rgb(0,0,0)" stroke="none" font-family="Times New Roman embedded" font-size="847" font-style="normal" font-weight="400">
-     <text x="10416" y="25695">
+     <text x="10416" y="19895">
       <tspan x="10416 10628 10839">...</tspan></text>
     </g>
    </g>
-   <g id="Drawing_38">
-    <path fill="rgb(207,231,245)" stroke="none" d="M 14839,26808 L 13439,26808 13439,24008 16239,24008 16239,26808 14839,26808 Z"/>
-    <path fill="none" stroke="rgb(128,128,128)" stroke-linejoin="round" d="M 14839,26808 L 13439,26808 13439,24008 16239,24008 16239,26808 14839,26808 Z"/>
-    <g fill="rgb(0,0,0)" stroke="none" font-family="Times New Roman embedded" font-size="634" font-style="normal" font-weight="400">
-     <text x="13923" y="25624">
+   <g id="Drawing_32">
+    <path fill="rgb(207,231,245)" stroke="none" d="M 14839,21008 L 13439,21008 13439,18208 16239,18208 16239,21008 14839,21008 Z"/>
+    <path fill="none" stroke="rgb(128,128,128)" stroke-linejoin="round" d="M 14839,21008 L 13439,21008 13439,18208 16239,18208 16239,21008 14839,21008 Z"/>
+    <g fill="rgb(0,0,0)" stroke="none" font-family="Times New Roman embedded" font-size="635" font-style="normal" font-weight="400">
+     <text x="13923" y="19824">
       <tspan x="13923 14241 14418 14698 15015 15227 15544">diag(v)</tspan></text>
     </g>
    </g>
   </g>
-  <g id="DrawingGroup_7">
-   <g id="Drawing_39">
-    <path fill="rgb(207,231,245)" stroke="none" d="M 9857,17164 L 6407,17164 6407,14364 13307,14364 13307,17164 9857,17164 Z"/>
-    <path fill="none" stroke="rgb(128,128,128)" stroke-linejoin="round" d="M 9857,17164 L 6407,17164 6407,14364 13307,14364 13307,17164 9857,17164 Z"/>
-    <g fill="rgb(0,0,0)" stroke="none" font-family="Times New Roman embedded" font-size="635" font-style="normal" font-weight="400">
-     <text x="9146" y="15876">0</text>
-    </g>
-    <g fill="rgb(0,0,0)" stroke="none" font-family="Times New Roman embedded" font-size="368" font-style="normal" font-weight="400">
-     <text x="9464" y="16142">
-      <tspan x="9464 9790 9976 10302">MxMN</tspan></text>
-    </g>
-   </g>
-   <g id="Drawing_40">
-    <path fill="rgb(207,231,245)" stroke="none" d="M 14846,17164 L 13446,17164 13446,14364 16246,14364 16246,17164 14846,17164 Z"/>
-    <path fill="none" stroke="rgb(128,128,128)" stroke-linejoin="round" d="M 14846,17164 L 13446,17164 13446,14364 16246,14364 16246,17164 14846,17164 Z"/>
-    <g fill="rgb(0,0,0)" stroke="none" font-family="Times New Roman embedded" font-size="635" font-style="normal" font-weight="400">
-     <text x="14321" y="15876">I</text>
-    </g>
-    <g fill="rgb(0,0,0)" stroke="none" font-family="Times New Roman embedded" font-size="368" font-style="normal" font-weight="400">
-     <text x="14533" y="16142">
-      <tspan x="14533 14859 15045">MxM</tspan></text>
-    </g>
-   </g>
+  <g>
+   <path fill="none" stroke="rgb(0,0,0)" id="Drawing_33_0" stroke-linejoin="round" stroke-dasharray="508,508,508,508" d="M 5800,14000 L 27300,14000"/>
   </g>
   <g>
-   <path fill="none" stroke="rgb(0,0,0)" id="Drawing_41_0" stroke-linejoin="round" stroke-dasharray="508,508,508,508" d="M 5800,14000 L 27300,14000"/>
-  </g>
-  <g>
-   <path fill="none" stroke="rgb(0,0,0)" id="Drawing_42_0" stroke-linejoin="round" stroke-dasharray="508,508,508,508" d="M 5800,6500 L 27300,6500"/>
+   <path fill="none" stroke="rgb(0,0,0)" id="Drawing_34_0" stroke-linejoin="round" stroke-dasharray="508,508,508,508" d="M 5800,6500 L 27300,6500"/>
   </g>
  </g>
 </svg>
