@@ -49,7 +49,7 @@ prices <- t(sapply(sellers_reference, function (seller_username) {
 }, USE.NAMES = FALSE))
 
 # 'c' is a quite reserved word in R! :-)
-c_ <- as.vector(t(prices))
+c_ <- c(as.vector(t(prices)), rep(0, M))
 
 r <- sapply(part_id_reference, function (part_id) {
     q <- sum(parts_list[parts_list$partId == part_id, c("quantity")])
@@ -64,10 +64,10 @@ v <- sapply(sellers_reference, function (seller_username) {
     return(if(!is.na(minBuy)) minBuy else 0)
 }, USE.NAMES = FALSE)
 
-b <- c(r, m, rep(0, M), rep(1, M), rep(T, M), v)
+b <- c(r, m, rep(T, M), v)
 # linprog wanted this vector as one of the input parameters, Rsymphony may be
 # different though
-constraints <- c(rep("==", N), rep("<=", N * M), rep(">=", M), rep("<=", M), rep("<=", M), rep(">=", M))
+constraints <- c(rep("==", N), rep("<=", N * M), rep("<=", M), rep(">=", M))
 
 # Start assembling the A matrix.  
 
@@ -89,11 +89,6 @@ for(x in seq(M)) {
     ))
 }
 A3 <- cbind(A3, diag(T, M))
-A3 <- rbind(
-    cbind(matrix(0, nrow = M, ncol = N * M), diag(1, M)),
-    cbind(matrix(0, nrow = M, ncol = N * M), diag(1, M)),
-    A3  
-)
 
 # 4th group of rows
 A4 <- matrix(nrow = M, ncol = 0)
@@ -110,4 +105,10 @@ A4 <- cbind(A4, diag(v, M))
 A <- rbind(A1, A2, A3, A4)
 rm(A1, A2, A3, A4)
 
-# ... waiting for SYMPHONY to successfully compile :-(
+solution <- Rsymphony_solve_LP(
+    obj = c_,
+    mat = A,
+    dir = constraints,
+    rhs = b,
+    types = c(rep("I", N), rep("B", M))
+)
