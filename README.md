@@ -56,6 +56,7 @@ In more detail:
 
 Where:
 - *N* is the number of different parts that I need and are available on the BrickLink market.
+- *T* is the total number of pieces I can buy (will be used further down in the document).
 - *M* is the number of UK sellers, shipping to UK customers, who offer the full quantity of at least one of the above parts, plus any quantity of any other part.
 - *p<sub>i,j</sub>* is the *i-th* seller's worst price for the *j-th* part, and *x<sub>i,j</sub>* is the quantity of the *j-th* part I am buying from the *i-th* seller. 
 
@@ -86,14 +87,12 @@ Where:
     ![](docs/images/012.gif)
 
     You can see that:
-    - when I am buying from the *i-th* seller, *y<sub>i</sub>* is 0 and the new disequation assures the minimum buy;
-    - when I am *not* buying from the seller, *y<sub>i</sub>* is 1 and the new disequation removes the minimum buy constraint. 
+    - when I am buying from the *i-th* seller, *y<sub>i</sub>* is 0 and the new constraint form assures the minimum buy;
+    - when I am *not* buying from the seller, *y<sub>i</sub>* is 1 and the new constraint form removes the minimum buy constraint. 
 
-[UNSTABLE FROM HERE ONWARDS]
+The whole set of constraints translates in an *A* that looks like in the diagram below. You will need an SVG-enabled web browser to see the picture. Click to see at full resolution.
 
-The whole set of constraints translates in an *A* that looks like this:
-
-![](docs/images/006.png)
+[![](docs/images/006.svg)](docs/images/006.svg)
 
 More to come...
 
