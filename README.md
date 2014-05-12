@@ -71,11 +71,11 @@ Where:
   
   where *m<sub>i,j</sub>* is the *i-th* seller's availability of the *j-th* part (“max” number of pieces) .
 
-- Third, the *i-th* seller has the faculty not to accept orders whose value is smaller than *v<sub>i</sub>*:
+- Third, the *i-th* seller has the faculty not to accept orders whose value is smaller than *v<sub>i</sub>*. Note that this is a **conditional constraint**, and adds a whole new layer of complication to the maths of the problem (see chapter 7.4 [here](http://www.aimms.com/aimms/download/manuals/aimms3om_integerprogrammingtricks.pdf)).
   
   ![](docs/images/005.gif)
 
-which translates in an *A* that looks like this:
+The whole set of constraints translates in an *A* that looks like this:
 
 ![](docs/images/006.png)
 
@@ -83,11 +83,13 @@ More to come...
 
 ##The tools
 
-My favourite programming environment for developing contraptions like this is NodeJS: versatile, lightweight, efficient, re-usable, rich of libraries... but all programming environments have their weaknesses and limitations. In this case, NodeJS was fantastic for the scraping part, but does not natively support memory-efficient sparse matrices: even trying to create an **empty** *A* put it on its knees.
+My favourite programming environment for developing contraptions like this is [NodeJS](http://nodejs.org/): versatile, lightweight, efficient, re-usable, rich of libraries... but all programming environments have their weaknesses and limitations. In this case, NodeJS was fantastic for the scraping part, but does not natively support memory-efficient matrices: even trying to create an **empty** *A* put it on its knees. The problem is not even the memory required to store *A*, but just its dimensions.
 
 I could have put custom, more memory-efficient matrix manipulation libraries to the test, and I gave [Math.js](http://mathjs.org/) a shot, but had the same identical problem. The most natural thing to do was then to integrate the NodeJS code I had already written with my favourite programming environment for data science: R.
 
-CRAN's ["task view" on optimisation and mathematical programming](http://cran.r-project.org/web/views/Optimization.html) lists many options. The most obvious choice was [linprog](http://cran.r-project.org/web/packages/linprog/index.html), that is a wrapper to the [lp_solve library](https://groups.yahoo.com/neo/groups/lp_solve/info).
+CRAN's ["task view" on optimisation and mathematical programming](http://cran.r-project.org/web/views/Optimization.html) lists many options. The most obvious choice was [Rsymphony](http://cran.r-project.org/web/packages/Rsymphony/Rsymphony.pdf): R's wrapper around the open source ["SYMPHONY" library](http://www.coin-or.org/projects/SYMPHONY.xml).
+
+And here is where the project grinds to a halt for the time being. At the moment of writing SYMPHONY fails compiling on MacOS both using Rsymphony's installation script and installing it as a standalone library through [Homebrew](http://brew.sh/). The issue is described [here](https://github.com/Homebrew/homebrew-science/issues/873).
 
 ##Licence
 
