@@ -92,7 +92,7 @@ Where:
 
 The whole set of constraints translates in an *A* that looks like in the diagram below. You will need an SVG-enabled web browser to see the picture. Click to see at full resolution.
 
-[![](docs/images/006.svg)](docs/images/006.svg)
+[![](docs/images/006.png)](docs/images/006.svg)
 
 More to come...
 
