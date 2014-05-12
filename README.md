@@ -90,7 +90,7 @@ Where:
     - when I am buying from the *i-th* seller, *y<sub>i</sub>* is 0 and the new constraint form assures the minimum buy;
     - when I am *not* buying from the seller, *y<sub>i</sub>* is 1 and the new constraint form removes the minimum buy constraint. 
 
-The whole set of constraints translates in an *A* that looks like in the diagram below. You will need an SVG-enabled web browser to see the picture. Click to see at full resolution.
+The whole set of constraints translates in an *A* that looks like in the diagram below. Click on the picture to see an SVG of the same at full resolution.
 
 [![](docs/images/006.png)](docs/images/006.svg)
 

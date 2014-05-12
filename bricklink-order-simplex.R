@@ -1,5 +1,5 @@
 # Install and load any required packages
-.requiredPackages <- c("linprog")
+.requiredPackages <- c("Rsymphony")
 .packagesToInstall <- setdiff(.requiredPackages, installed.packages())
 if (length(.packagesToInstall) > 0) install.packages(.packagesToInstall)
 sapply(.requiredPackages, require, character.only = TRUE)
@@ -37,12 +37,15 @@ prices <- t(sapply(sellers_reference, function (seller_username) {
 }, USE.NAMES = FALSE))
 
 # 'c' is a quite reserved word in R! :-)
-c_ <- t(as.vector(t(prices)))
+c_ <- as.vector(t(prices))
 
 r <- sapply(part_id_reference, function (part_id) {
     q <- sum(parts_list[parts_list$partId == part_id, c("quantity")])
     return(if(!is.na(q)) q else 0)    
 })
+
+# 'T' is also reserved
+T_ <- sum(r)
 
 v <- sapply(sellers_reference, function (seller_username) {
     minBuy <- availability[availability$sellerUsername == seller_username, c("minBuy")][1]
@@ -51,25 +54,43 @@ v <- sapply(sellers_reference, function (seller_username) {
 
 b <- c(c_, r, v)
 
-# Start assembling the A matrix. Note that linprog does not need the normal 
-# form.
-# top group of rows
+# Start assembling the A matrix.  
+# 1st group of rows
 A1 <- matrix(nrow = N, ncol = 0)
 for(x in seq(M)) A1 <- cbind(A1, diag(1, N))
-# middle group of rows
-A2 <- diag(1, N * M)
-# bottom group of rows
-A3 <- matrix(nrow = M, ncol = 0)
+A1 <- cbind(A1, matrix(0, nrow = N, ncol = M))
+# 2nd group of rows
+A2 <- cbind(diag(1, N * M), matrix(0, nrow = N * M, ncol = M))
+# 3rd group of rows
+A3bottom <- matrix(nrow = M, ncol = 0)
 for(x in seq(M)) {
-    A3 <- cbind(A3, rbind(
+    A3bottom <- cbind(A3bottom, rbind(
+        matrix(0, nrow = x - 1, ncol = N),    
+        matrix(1, nrow = 1, ncol = N),    
+        matrix(0, nrow = M - x, ncol = N)    
+    ))
+}
+A3bottom <- cbind(A3bottom, diag(T, M))
+A3 <- rbind(
+    cbind(matrix(0, nrow = M, ncol = N * M), diag(1, M)),
+    cbind(matrix(0, nrow = M, ncol = N * M), diag(1, M)),
+    A3bottom    
+)
+# 4th group of rows
+A4 <- matrix(nrow = M, ncol = 0)
+for(x in seq(M)) {
+    A4 <- cbind(A4, rbind(
         matrix(0, nrow = x - 1, ncol = N),    
         prices[x, ],    
         matrix(0, nrow = M - x, ncol = N)    
     ))
 }
+# something wrong in the multiplication below, I get a vector rather than a 
+# square matrix
+A4 <- cbind(A4, t(v) %*% diag(1, M))
 # all together now!
-A <- rbind(A1, A2, A3)
-rm(A1, A2, A3)
+A <- rbind(A1, A2, A3, A4)
+rm(A1, A2, A3, A3bottom, A4)
 
 solveLP(c_, b, A, 
         maximum = FALSE, 
