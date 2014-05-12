@@ -71,9 +71,25 @@ Where:
   
   where *m<sub>i,j</sub>* is the *i-th* seller's availability of the *j-th* part (“max” number of pieces) .
 
-- Third, the *i-th* seller has the faculty not to accept orders whose value is smaller than *v<sub>i</sub>*. Note that this is a **conditional constraint**, and adds a whole new layer of complication to the maths of the problem (see chapter 7.4 [here](http://www.aimms.com/aimms/download/manuals/aimms3om_integerprogrammingtricks.pdf)).
+- Third, the *i-th* seller has the faculty not to accept orders whose value is smaller than *v<sub>i</sub>*. Note that this is a **conditional constraint**, and adds a whole new layer of complication to the maths of the problem.
   
   ![](docs/images/005.gif)
+
+  [AIMMS](http://business.aimms.com/) kindly offers for download the "Integer Programming Tricks" chapter from their "Modelling Guide" book. [Section 7.4](http://www.aimms.com/aimms/download/manuals/aimms3om_integerprogrammingtricks.pdf) describes how to transform conditional constraints into normal constraints. We need to:
+
+  - introduce a binary variable *y<sub>i</sub>*, representing if we're ordering (0) or not (1) from the *i-th* seller:
+
+    ![](docs/images/011.gif)
+
+  - make the original conditional constraint into the following:
+
+    ![](docs/images/012.gif)
+
+    You can see that:
+    - when I am buying from the *i-th* seller, *y<sub>i</sub>* is 0 and the new disequation assures the minimum buy;
+    - when I am *not* buying from the seller, *y<sub>i</sub>* is 1 and the new disequation removes the minimum buy constraint. 
+
+[UNSTABLE FROM HERE ONWARDS]
 
 The whole set of constraints translates in an *A* that looks like this:
 
