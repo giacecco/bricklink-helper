@@ -55,6 +55,7 @@ module.exports = function (options) {
 								// relevant
 								// 'location': $('td:nth-child(3) font font', elem).text().match(/Loc: (.+),/)[1],
 								'minBuy': $('td:nth-child(3) font font', elem).text().match(/Min Buy: (.+)$/)[1],
+								'requiredQuantity': searchOptions.quantity,						
 								'quantity': parseInt($(elem).text().match(/Qty: (.+)Each/)[1]),						
 								'price': parseFloat($('td:nth-child(4) font:nth-child(1)', elem).text().match(/Each\:.~GBP (.+)\(/)[1]),						
 								// 'sellerName': $('td:nth-child(4) a', elem).html(),
@@ -92,10 +93,11 @@ module.exports = function (options) {
 				callback(err);
 			});
 		}, function (err) {
-			// second round, for all sellers identified this far, search also for 
-			// partial availability of all other parts
+			// second round: for all parts for which I have found at least one
+			// seller who can offer the full quantity, search also for partial
+			// quantities among all other sellers
 			log("Start of second round of search...");
-			var allPartIds = searchOptions.map(function (s) { return s.partId; });
+			var allPartIds = _.uniq(firstRoundResults.map(function (r) { return r.partId; })).sort();
 			var sellerUsernames = _.uniq(firstRoundResults.map(function (r) { return r.sellerUsername; })).sort();
 			async.each(sellerUsernames, function (sellerUsername, callback) {
 				var fullAvailabilityPartIds = firstRoundResults.reduce(function (memo, r) { 
