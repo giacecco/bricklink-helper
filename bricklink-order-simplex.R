@@ -9,6 +9,19 @@ args <- commandArgs(trailingOnly = TRUE)
 parts_list <- read.csv(if (!is.na(args[1])) args[1] else ".r-exchange/partsList.csv", stringsAsFactors = FALSE)
 availability <- read.csv(if (!is.na(args[2])) args[2] else ".r-exchange/availability.csv", stringsAsFactors = FALSE)
 
+# Create the reference part id list. Note that I ignore both:
+# a) the requirement for part ids that are not available on the market, and
+# b) the availability of part ids that are not a requirement
+# TODO: did I find a suitable place to warn the user about the parts that
+#       could not be found on the market? 
+part_id_reference <- sort(intersect(unique(availability$partId), unique(parts_list$partId)))
+N <- length(part_id_reference)
+
+# Create the reference seller list. Note that I ignore the availability of 
+# parts that are not in the reference parts list created above.
+sellers_reference <- sort(unique(availability[availability$partId %in% part_id_reference, c('sellerUsername')]))
+M <- length(sellers_reference)
+
 # Just for testing: if any value in the 
 # no_of_sellers_who_can_offer_the_whole_quantity is zero, something is wrong
 # as at least one seller is supposed to exist who can offer the whole number
@@ -25,19 +38,6 @@ check_consistency_of_input_data <- function () {
     }
 }
 check_consistency_of_input_data()
-
-# Create the reference part id list. Note that I ignore both:
-# a) the requirement for part ids that are not available on the market, and
-# b) the availability of part ids that are not a requirement
-# TODO: did I find a suitable place to warn the user about the parts that
-#       could not be found on the market? 
-part_id_reference <- sort(intersect(unique(availability$partId), unique(parts_list$partId)))
-N <- length(part_id_reference)
-
-# Create the reference seller list. Note that I ignore the availability of 
-# parts that are not in the reference parts list created above.
-sellers_reference <- sort(unique(availability[availability$partId %in% part_id_reference, c('sellerUsername')]))
-M <- length(sellers_reference)
 
 # See the documentation at http://dico.im/1nBkI4i ; the following creates the 
 # elements of the integer linear programming problem as required to get to 
