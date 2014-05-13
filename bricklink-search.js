@@ -49,20 +49,12 @@ module.exports = function (options) {
 						results = $('tr.tm').map(function (index, elem) {
 							var item = { 
 								'partId': searchOptions.partId,
-								'new': "new" === $('td:nth-child(2)', elem).text().toLowerCase(),
-								// the code, for the time being, consider only UK
-								// sellers shipping to UK customers, so this is not
-								// relevant
-								// 'location': $('td:nth-child(3) font font', elem).text().match(/Loc: (.+),/)[1],
 								'minBuy': $('td:nth-child(3) font font', elem).text().match(/Min Buy: (.+)$/)[1],
 								'requiredQuantity': searchOptions.quantity,						
 								'quantity': parseInt($(elem).text().match(/Qty: (.+)Each/)[1]),						
 								'price': parseFloat($('td:nth-child(4) font:nth-child(1)', elem).text().match(/Each\:.~GBP (.+)\(/)[1]),						
-								// 'sellerName': $('td:nth-child(4) a', elem).html(),
-								'sellerNoOfFeedback': parseInt($('td:nth-child(4) a', elem).text().match(/\((.+)\)/)),
 								'sellerUsername': qs.parse($('td:nth-child(4) a', elem).attr('href').match(/\?(.+)/)[1]).p,
 							};
-							if (item.sellerNoOfFeedback) item.sellerNoOfFeedback = item.sellerNoOfFeedback[1];
 							item.minBuy = item.minBuy === "None" ? null : parseFloat(item.minBuy.match(/~GBP (.+)/)[1]);
 							item.sellerUrl = "http://www.bricklink.com/store.asp?" + qs.stringify({ 'p': item.sellerUsername });
 							// TODO, rather than the URL, check the actual feedback!
