@@ -9,6 +9,23 @@ args <- commandArgs(trailingOnly = TRUE)
 parts_list <- read.csv(if (!is.na(args[1])) args[1] else ".r-exchange/partsList.csv", stringsAsFactors = FALSE)
 availability <- read.csv(if (!is.na(args[2])) args[2] else ".r-exchange/availability.csv", stringsAsFactors = FALSE)
 
+# Just for testing: if any value in the 
+# no_of_sellers_who_can_offer_the_whole_quantity is zero, something is wrong
+# as at least one seller is supposed to exist who can offer the whole number
+# of pieces for at least one part
+check_consistency_of_input_data <- function () {
+    foo <- data.frame(part_id = part_id_reference, no_of_sellers_who_can_offer_the_whole_quantity = sapply(seq(length(part_id_reference)), function (pos) {
+        return(nrow(availability[(availability$partId == part_id_reference[pos]) & (availability$quantity >= r[pos]), ]))
+    }))
+    foo <- foo[foo$no_of_sellers_who_can_offer_the_whole_quantity == 0,]
+    if (nrow(foo) > 0) { 
+        cat("You should stop, the input data is not consistent and there may be no solution to the problem.\n")  
+        cat("The following part ids have no availability:\n")
+        foo$part_id
+    }
+}
+check_consistency_of_input_data()
+
 # Create the reference part id list. Note that I ignore both:
 # a) the requirement for part ids that are not available on the market, and
 # b) the availability of part ids that are not a requirement
@@ -128,10 +145,3 @@ solution <- Rsymphony_solve_LP(
     types = c(rep("I", N * M), rep("B", M))
 )
 
-# Just for testing: if any value in the 
-# no_of_sellers_who_can_offer_the_whole_quantity is zero, something is wrong
-# as at least one seller is supposed to exist who can offer the whole number
-# of pieces for at least one part
-foo <- cbind(part_id = part_id_reference, no_of_sellers_who_can_offer_the_whole_quantity = sapply(seq(length(part_id_reference)), function (pos) {
-    return(nrow(availability[(availability$partId == part_id_reference[pos]) & (availability$quantity >= r[pos]), ]))
-}))
