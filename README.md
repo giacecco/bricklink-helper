@@ -26,11 +26,11 @@ Read [Wikipedia's description of the simplex algorithm](http://en.wikipedia.org/
 
 - **I will rely on UK sellers only**, shipping to UK buyers (myself).
 
-- **I will not be considering parts that are unavailable in their full quantity from at least one of the above BrickLink sellers**. Those are particularly rare and will be procured through the more expensive [LEGO “Pick a brick” service](http://shop.lego.com/en-GB/Pick-A-Brick-ByTheme).
+- **I will not be considering parts that are unavailable in their full quantity from at least one of the above BrickLink sellers**. Those are particularly rare and will be procured through the more expensive [LEGO “Pick a brick” service](http://shop.lego.com/en-GB/Pick-A-Brick-ByTheme). This constraint will ensure that the problem has at least one solution, that is the obvious one of ordering all pieces of each part by the respective seller who offers all of them.
 
-- **I will not be considering the real shipping costs**, as it is practically impossible to get them in machine-readable format from BrickLink. In their place, I will associate to each order a "virtual", fixed  cost that is the same whatever the seller. That will also represent the cost intrinsic into managing an order (making the order, managing the incoming post, checking that the pieces correspond to the order...) and will assure that the algorithm won't excessively fragment the overall order across too many sellers. Moreover, as we are dealing with sellers that are all based in the same country, we can presume that the shipping costs are similar for each order. 
+- **I will not be considering the real shipping costs**, as it is practically impossible to get them in machine-readable format from BrickLink. In their place, I will associate to each order a "virtual", fixed  cost _S_ (as in "shipping") that is always the same, whatever the seller. That will also represent the cost intrinsic into managing an order (making the order, managing the incoming post, checking that the pieces correspond to the order...) and will assure that the algorithm won't excessively fragment the overall order across too many sellers. Moreover, as we are dealing with sellers that are all based in the same country, we can presume that the shipping costs are similar for each order. 
 
-- The same seller can offer the same part at different prices. For simplicity, **I will be considering the sellers' worst price only**. 
+- The same seller can offer the same part at different prices, e.g. because some bricks can be used and others new. For simplicity, **I will be considering the sellers' worst price only**. 
 
 Given the above, the problem looks like this:
 
@@ -50,17 +50,19 @@ Given the above, the problem looks like this:
 
 In more detail:
 
-![](docs/images/001.gif)
-
 ![](docs/images/002.gif)
+
+![](docs/images/001.gif)
 
 Where:
 - *N* is the number of different parts that I need and are available on the BrickLink market.
-- *T* is the total number of pieces I can buy (will be used further down in the document).
 - *M* is the number of UK sellers, shipping to UK customers, who offer the full quantity of at least one of the above parts, plus any quantity of any other part.
-- *p<sub>i,j</sub>* is the *i-th* seller's worst price for the *j-th* part, and *x<sub>i,j</sub>* is the quantity of the *j-th* part I am buying from the *i-th* seller. 
+- *x<sub>i,j</sub>* is the number of bricks of the *j-th* part that I order from the *i-th* seller
+- *T* is the total number of pieces I can buy, that is the sum of all *x<sub>i,j</sub>*'s (it will be used further down in the document).
+- *y<sub>i</sub>* are boolean variables that represent if I order (1) or not (0) from the *i-th* seller. Introducing M boolean variables may look overkill, but you will find out as you keep reading that these variables also cover another important role in our problem.
+- *p<sub>i,j</sub>* is the *i-th* seller's worst price for the *j-th* part. 
 
-*A* is the expression of several conditions. 
+*A* is the expression of several kind of constraints. 
 
 - First, I need to satisfy my requirements
   
@@ -78,15 +80,15 @@ Where:
   
   ![](docs/images/005.gif)
 
-  [AIMMS](http://business.aimms.com/) kindly offers for download the "Integer Programming Tricks" chapter from their "Modelling Guide" book. [Section 7.4](http://www.aimms.com/aimms/download/manuals/aimms3om_integerprogrammingtricks.pdf) describes how to transform conditional constraints into normal constraints. We need to:
+  [AIMMS](http://business.aimms.com/) kindly offers for download the "Integer Programming Tricks" chapter from their "Modelling Guide" book. [Section 7.4](http://www.aimms.com/aimms/download/manuals/aimms3om_integerprogrammingtricks.pdf) describes how to transform conditional constraints into normal constraints. We will take advantage of the *y* variables defined earlier and add two constraints for each seller: 
 
-  - introduce binary variables *y<sub>i</sub>*, representing if we're ordering (1) or not (0) from the *i-th* seller:
+  - first, we actually give mathematical meaning to *y<sub>i</sub>*:
 
     ![](docs/images/011.gif)
 
     For simplicity, in the following I won't show the constraints that make the *y*'s binary, in the same way I am not showing that the *x*'s are >= 0.
 
-  - make the original conditional constraint into the following:
+  - then, we transform the original conditional constraint into the following:
 
     ![](docs/images/012.gif)
 
