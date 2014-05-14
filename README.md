@@ -28,7 +28,7 @@ Read [Wikipedia's description of the simplex algorithm](http://en.wikipedia.org/
 
 - **I will not be considering parts that are unavailable in their full quantity from at least one of the above BrickLink sellers**. Those are particularly rare and will be procured through the more expensive [LEGO “Pick a brick” service](http://shop.lego.com/en-GB/Pick-A-Brick-ByTheme).
 
-- **I will not be considering shipping costs**, as it is practically impossible to get them in machine-readable format. As we are dealing with sellers that are all based in the same country, we can presume that the shipping costs are similar for each order. Minimising the number of orders likely implies minimising the shipping costs, although we are not going to address this objective, too.
+- **I will not be considering the real shipping costs**, as it is practically impossible to get them in machine-readable format from BrickLink. In their place, I will associate to each order a "virtual", fixed  cost that is the same whatever the seller. That will also represent the cost intrinsic into managing an order (making the order, managing the incoming post, checking that the pieces correspond to the order...) and will assure that the algorithm won't excessively fragment the overall order across too many sellers. Moreover, as we are dealing with sellers that are all based in the same country, we can presume that the shipping costs are similar for each order. 
 
 - The same seller can offer the same part at different prices. For simplicity, **I will be considering the sellers' worst price only**. 
 
@@ -80,7 +80,7 @@ Where:
 
   [AIMMS](http://business.aimms.com/) kindly offers for download the "Integer Programming Tricks" chapter from their "Modelling Guide" book. [Section 7.4](http://www.aimms.com/aimms/download/manuals/aimms3om_integerprogrammingtricks.pdf) describes how to transform conditional constraints into normal constraints. We need to:
 
-  - introduce binary variables *y<sub>i</sub>*, representing if we're ordering (0) or not (1) from the *i-th* seller:
+  - introduce binary variables *y<sub>i</sub>*, representing if we're ordering (1) or not (0) from the *i-th* seller:
 
     ![](docs/images/011.gif)
 
@@ -91,8 +91,8 @@ Where:
     ![](docs/images/012.gif)
 
     You can see that:
-    - when I am buying from the *i-th* seller, *y<sub>i</sub>* is 0 and the new constraint form assures the minimum buy;
-    - when I am *not* buying from the seller, *y<sub>i</sub>* is 1 and the new constraint form removes the minimum buy constraint. 
+    - when I am buying from the *i-th* seller, *y<sub>i</sub>* is 1 and the new constraint form assures the minimum buy;
+    - when I am *not* buying from the seller, *y<sub>i</sub>* is 0 and the new constraint form removes the minimum buy constraint. 
 
 The whole set of constraints translates in an *A* that looks like in the diagram below. Click on the picture to see an SVG of the same at full resolution.
 
