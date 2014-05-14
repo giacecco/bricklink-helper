@@ -19,12 +19,16 @@ var readPartsList = function (filenames, callback) {
 	}
 
 	filenames = [ ].concat(filenames || [ ]);
-	async.reduce(filenames, [ ], function (memo, filename, callback) { 
+	async.reduce(filenames, { }, function (memo, filename, callback) { 
 		readFile(filename, function (err, data) {
-			memo = memo.concat(data);
+			data.forEach(function (d) {
+				memo[d.partId] = parseInt(d.quantity) + (memo[d.partId] || 0);
+			});
 			callback(err, memo);
 		}); 
-	}, callback);
+	}, function (err, data) {
+		callback(err, _.keys(data).map(function (partId) { return { 'partId': partId, 'quantity': data[partId] }; }));
+	});
 };
 
 var writeOrders = function(orders, callback) {
