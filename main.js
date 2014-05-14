@@ -8,12 +8,23 @@ var argv = require('yargs')
 	bricklinkSearch = new require('./bricklink-search')({ 'debug': true }),
 	bricklinkOrder = new require('./bricklink-order-simplex')();
 
-var readPartsList = function (filename, callback) {
-	csv()
-		.from.path(filename, { 'columns': true })
-		.to.array(function (data) {
-			callback(null, data);
-		});
+var readPartsList = function (filenames, callback) {
+
+	var readFile = function (filename, callback) {
+		csv()
+			.from.path(filename, { 'columns': true })
+			.to.array(function (data) {
+				callback(null, data);
+			});			
+	}
+
+	filenames = [ ].concat(filenames || [ ]);
+	async.reduce(filenames, [ ], function (memo, filename, callback) { 
+		readFile(filename, function (err, data) {
+			memo = memo.concat(data);
+			callback(err, memo);
+		}); 
+	}, callback);
 };
 
 var writeOrders = function(orders, callback) {

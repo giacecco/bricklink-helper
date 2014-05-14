@@ -29,12 +29,10 @@ module.exports = function (options) {
 
 		var rExchangeFolder = path.join(__dirname, ".r-exchange");
 
-		// save all data to transfer control to R
-
 		// create the folder if it does not exist
 		if (!fs.existsSync(rExchangeFolder)) fs.mkdirSync(rExchangeFolder);
 
-		// save partsList and availability
+		// save all data to transfer control to R
 		async.parallel([
 			function (callback) { writeCsv(partsList, path.join(rExchangeFolder, "partsList.csv"), callback); },
 			function (callback) { writeCsv(availability, path.join(rExchangeFolder, "availability.csv"), callback); },
