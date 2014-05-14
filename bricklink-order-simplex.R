@@ -125,6 +125,7 @@ A4 <- cbind(A4, diag(v, M))
 # all together now!
 A <- rbind(A1, A2, A3, A4)
 A_simplified <- rbind(A1_simplified, A2_simplified)
+rm(A1_simplified, A2_simplified)
 rm(A1, A2, A3, A4)
 
 solution_simplified <- Rsymphony_solve_LP(
@@ -144,4 +145,10 @@ solution <- Rsymphony_solve_LP(
     max = FALSE,
     types = c(rep("I", N * M), rep("B", M))
 )
+
+# make a human-readable version of the solution 
+foo <- matrix(solution_simplified$solution, ncol = M)
+colnames(foo) = sellers_reference
+rownames(foo) = part_id_reference
+foo <- data.frame(t(foo))
 
