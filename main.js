@@ -32,22 +32,11 @@ var readPartsList = function (filenames, callback) {
 };
 
 var writeOrders = function(orders, callback) {
-	var flattenedOrders = _.keys(orders).reduce(function (memo, sellerUsername) {
-			return memo.concat(orders[sellerUsername].map(function (p) {
-				p.sellerUsername = sellerUsername;
-				return p;
-			}));
-		}, [ ]).sort(function (a, b) {
-			return a.sellerUsername.toLowerCase() < b.sellerUsername.toLowerCase() ? -1 : 
-				a.sellerUsername.toLowerCase() > b.sellerUsername.toLowerCase() ? 1 : 
-				a.partId < b.partId ? -1 : a.partId > b.partId ? 1 : 
-				parseFloat(a.price) - parseFloat(b.price);
-		});
 	csv()
-		.from.array(flattenedOrders)
+		.from.array(orders)
 		.to.path(argv.out, { 
 			'header': true, 
-			'columns': _.keys(flattenedOrders[0]).sort(), 
+			'columns': _.keys(orders[0]).sort(), 
 		})
 		.on('close', function (count) {
 			callback(null);
@@ -57,7 +46,7 @@ var writeOrders = function(orders, callback) {
 readPartsList(argv.in, function (err, partsList) {
 
 	function makeOrder() {
-		bricklinkOrder.makeOrder(partsList, availability, function (orders, err) {
+		bricklinkOrder.makeOrder(partsList, availability, function (err, orders) {
 			writeOrders(orders, function (err) {
 				console.log("Finished.");
 			});		
