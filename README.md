@@ -20,7 +20,9 @@ This is how LEGO projects grind to a halt if you order your bricks by hand...
 
 When you have very specific needs, though, like buying all the bricks you need to build one of [Chris McVeigh's beautiful LEGO designs](http://chrismcveigh.com/cm/building_guides_-_technology.html), BrickLink's search features won't be able to help you much . [The Nintendo "NES" model](http://www.powerpig.ca/lego_kit_guides_2014/my_first_console_sprite.pdf), for example, is made of 61 different parts and a total of 217 pieces. This means that you will have to search BrickLink for each of those 61 parts, struggling to find the same seller offering more than one. If you're lucky, and after a couple of hours of diligent work, you will end up making perhaps a dozen orders, very likely spending more than necessary in both pieces and shipping costs.
 
-Enter bricklink-helper! bricklink-helper (or "BH" for short) will search BrickLink for you and calculate the most cost effective order for you to make, all of this by running a script for a few minutes. As simple as that. Running BH vs the Nintendo NES parts list on the evening of 15/5/2014 managed to procure all but 7 of the 217 pieces by relying on **3** sellers only and spending an average of 9p per piece, including shipping.
+Enter bricklink-helper! Bricklink-helper (or "BH" for short) will search BrickLink for you and calculate the most cost effective set of orders for you to make, all of this by running a script for a few minutes. As simple as that. 
+
+Running BH vs the Nintendo NES parts list on the evening of 15/5/2014 managed to procure all but 7 of the 217 pieces by relying on **3** sellers only and spending an average of 9p per piece, including shipping.
 
 ##Usage
 
@@ -40,7 +42,7 @@ If all is working nicely, launch BH by doing:
 
     node bricklink-helper.js --in parts_list_1.csv [--in parts_list_2.csv] --out orders.csv [--cache cache.json]
 
-You can specify as many input parts lists as you like: this is useful in case you wanted to build mode models, or more copies of the same; moreover, the more pieces you buy the more likely economies of scale are possible. At the moment of writing , BH support part lists in CSV format only: practically spreadsheets with two columns: the LEGO part id (named "partId") and the required quantity ("quantity"). 
+You can specify as many input parts lists as you like: this is useful in case you wanted to build mode models, or more copies of the same; moreover, the more pieces you buy the more likely economies of scale are possible. At the moment of writing, BH supports part lists in CSV format only: practically spreadsheets with two columns: the LEGO part id (named "partId") and the required quantity ("quantity"). 
 
 ![](docs/images/screenshot01.png)
 
