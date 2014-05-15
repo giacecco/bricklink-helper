@@ -53,7 +53,7 @@ var makeOrder = function (partsList_, availability_, callback) {
 		function (callback) { writeCsv(partsList, path.join(rExchangeFolder, "partsList.csv"), callback); },
 		function (callback) { writeCsv(availability, path.join(rExchangeFolder, "availability.csv"), callback); },
 	], function (err) {
-		console.log("Handing control over to R...");
+		console.log("Handing control over to R; this can take a long time...");
 		exec('/usr/local/bin/rscript "' + path.join(__dirname, 'bricklink-order-simplex.R') + '" "' + rExchangeFolder + '"', function (error, stdout, stderr) {
 			console.log("Completed.");
 			console.log(stdout);
