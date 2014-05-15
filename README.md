@@ -20,8 +20,6 @@ The second approach, potentially optimal, is looking at the problem as a pure [i
 
 ##The maths
 
-** THIS CHAPTER IS WORK IN PROGRESS **
-
 Read [Wikipedia's description of the simplex algorithm](http://en.wikipedia.org/wiki/Simplex_algorithm) first. The first objective is describing the problem in its standard components, but I need to take a few assumptions first: 
 
 - **I will rely on UK sellers only**, shipping to UK buyers (myself).
@@ -100,8 +98,6 @@ The whole set of constraints translates in an *A* that looks like in the diagram
 
 [![](docs/images/006.png)](docs/images/006.svg)
 
-More to come...
-
 ##The tools
 
 My favourite programming environment for developing contraptions like this is [NodeJS](http://nodejs.org/): versatile, lightweight, efficient, re-usable, rich of libraries... but all programming environments have their weaknesses and limitations. In this case, NodeJS was fantastic for the scraping part, but does not natively support memory-efficient matrices: even trying to create an **empty** *A* put it on its knees. The problem is not even the memory required to store *A*, but just its dimensions.
@@ -109,8 +105,6 @@ My favourite programming environment for developing contraptions like this is [N
 I could have put custom, more memory-efficient matrix manipulation libraries to the test, and I gave [Math.js](http://mathjs.org/) a shot, but had the same identical problem. The most natural thing to do was then to integrate the NodeJS code I had already written with my favourite programming environment for data science: R.
 
 CRAN's ["task view" on optimisation and mathematical programming](http://cran.r-project.org/web/views/Optimization.html) lists many options. The most obvious choice was [Rsymphony](http://cran.r-project.org/web/packages/Rsymphony/Rsymphony.pdf): R's wrapper around the open source ["SYMPHONY" library](http://www.coin-or.org/projects/SYMPHONY.xml).
-
-And here is where the project grinds to a halt for the time being. At the moment of writing SYMPHONY fails compiling on MacOS both using Rsymphony's installation script and installing it as a standalone library through [Homebrew](http://brew.sh/). The issue is described [here](https://github.com/Homebrew/homebrew-science/issues/873).
 
 ##Licence
 
