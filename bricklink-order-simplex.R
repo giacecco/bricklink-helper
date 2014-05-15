@@ -6,8 +6,9 @@ sapply(.requiredPackages, require, character.only = TRUE)
 
 # Read the data from the exchange folder.
 args <- commandArgs(trailingOnly = TRUE)
-parts_list <- read.csv(if (!is.na(args[1])) args[1] else ".r-exchange/partsList.csv", stringsAsFactors = FALSE)
-availability <- read.csv(if (!is.na(args[2])) args[2] else ".r-exchange/availability.csv", stringsAsFactors = FALSE)
+parameters <- read.csv(paste0(if (!is.na(args[1])) args[1] else ".r-exchange", "/parameters.csv"), stringsAsFactors = FALSE)[1, ]
+parts_list <- read.csv(paste0(if (!is.na(args[1])) args[1] else ".r-exchange", "/partsList.csv"), stringsAsFactors = FALSE)
+availability <- read.csv(paste0(if (!is.na(args[1])) args[1] else ".r-exchange", "/availability.csv"), stringsAsFactors = FALSE)
 
 # Create the reference part id list. Note that I ignore both:
 # a) the requirement for part ids that are not available on the market, and
@@ -66,7 +67,7 @@ prices <- t(sapply(sellers_reference, function (seller_username) {
 }, USE.NAMES = FALSE))
 
 # 'c' is a quite reserved word in R! :-)
-c_ <- c(as.vector(t(prices)), rep(0, M))
+c_ <- c(as.vector(t(prices)), rep(parameters$S, M))
 c_simplified <- as.vector(t(prices))
 
 r <- sapply(part_id_reference, function (part_id) {
@@ -82,7 +83,7 @@ v <- sapply(sellers_reference, function (seller_username) {
     return(if(!is.na(minBuy)) minBuy else 0)
 }, USE.NAMES = FALSE)
 
-b <- c(r, m, rep(T, M), v)
+b <- c(r, m, rep(0, M), rep(0, M))
 b_simplified <- c(r, m)
 
 constraints <- c(rep("==", N), rep("<=", N * M), rep("<=", M), rep(">=", M))
@@ -109,7 +110,7 @@ for(x in seq(M)) {
         matrix(0, nrow = M - x, ncol = N)    
     ))
 }
-A3 <- cbind(A3, diag(T, M))
+A3 <- cbind(A3, diag(-T, M))
 
 # 4th group of rows
 A4 <- matrix(nrow = M, ncol = 0)
@@ -120,7 +121,7 @@ for(x in seq(M)) {
         matrix(0, nrow = M - x, ncol = N)    
     ))
 }
-A4 <- cbind(A4, diag(v, M))
+A4 <- cbind(A4, diag(-v, M))
 
 # all together now!
 A <- rbind(A1, A2, A3, A4)
