@@ -16,7 +16,7 @@ This is how LEGO projects grind to a halt if you order your bricks by hand...
 
 ##Introduction
 
-[BrickLink](http://www.bricklink.com/) is an independent marketplace for new and used LEGO parts. It is an invaluable resources for LEGO lovers around the world, allowing them to buy the most disparate parts at very affordable prices. 
+[BrickLink](http://www.bricklink.com/) is an independent marketplace for new and used LEGO parts. It is an invaluable resource for LEGO lovers around the world, allowing them to buy the most disparate parts at very affordable prices. 
 
 When you have very specific needs, though, like buying all the bricks you need to build one of [Chris McVeigh's beautiful LEGO designs](http://chrismcveigh.com/cm/building_guides_-_technology.html), BrickLink's search features won't be able to help you much . [The Nintendo "NES" model](http://www.powerpig.ca/lego_kit_guides_2014/my_first_console_sprite.pdf), for example, is made of 61 different parts and a total of 217 pieces. This means that you will have to search BrickLink for each of those 61 parts, struggling to find the same seller offering more than one. If you're lucky, and after a couple of hours of diligent work, you will end up making perhaps a dozen orders, very likely spending more than necessary in both pieces and shipping costs.
 
