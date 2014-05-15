@@ -133,7 +133,11 @@ solution <- Rsymphony_solve_LP(
 
 # make a human-readable version of the solution 
 output <- data.frame(t(matrix(solution$solution[1:(N*M)], ncol = M)))
+# add references to the seller usernames and the part ids
 colnames(output) <- part_id_reference
 output$sellerUsername <- sellers_reference
+# drop sellers from which we are not buying anything
 output <- output[rowSums(output[, setdiff(colnames(output), 'sellerUsername')]) > 0,  ]
+# make sellerUsername the first column
+output <- cbind(sellerUsername = output$sellerUsername, output[, setdiff(colnames(output), 'sellerUsername')])
 write.csv(output, paste0(if (!is.na(args[1])) args[1] else ".r-exchange", "/output.csv"), row.names = FALSE)
