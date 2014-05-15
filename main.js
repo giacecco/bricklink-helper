@@ -32,11 +32,13 @@ var readPartsList = function (filenames, callback) {
 };
 
 var writeOrders = function(orders, callback) {
+	// At the moment this is not really useful: the R output is exactly the same
+	// file!
 	csv()
 		.from.array(orders)
 		.to.path(argv.out, { 
 			'header': true, 
-			'columns': _.keys(orders[0]).sort(), 
+			'columns': [ "sellerUsername" ].concat(_.difference(_.keys(orders[0]).sort(), [ "sellerUsername" ])), 
 		})
 		.on('close', function (count) {
 			callback(null);
