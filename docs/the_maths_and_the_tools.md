@@ -6,7 +6,7 @@ Read [Wikipedia's description of the simplex algorithm](http://en.wikipedia.org/
 
 - **I will rely on UK sellers only**, shipping to UK buyers (myself).
 
-- **I will not be considering parts that are unavailable in their full quantity from at least one of the above BrickLink sellers**. Those are particularly rare and will be procured through the more expensive [LEGO “Pick a brick” service](http://shop.lego.com/en-GB/Pick-A-Brick-ByTheme). This constraint will ensure that the problem has at least one solution, that is the obvious one of ordering all pieces of each part by the respective seller who offers all of them.
+- **I will not be considering parts that are unavailable in their full quantity from at least one of the above BrickLink sellers**. Those are particularly rare and will be procured through LEGO's “Pick a brick” service. This constraint will ensure that the problem has at least one solution, that is the obvious one of ordering all pieces of each part by the respective seller who offers all of them.
 
 - **I will not be considering the real shipping costs**, as it is practically impossible to get them in machine-readable format from BrickLink. In their place, I will associate to each order a "virtual", fixed  cost _S_ (as in "shipping") that is always the same, whatever the seller. That will also represent the cost intrinsic into managing an order (making the order, managing the incoming post, checking that the pieces correspond to the order...) and will assure that the algorithm won't excessively fragment the overall order across too many sellers. Moreover, as we are dealing with sellers that are all based in the same country, we can presume that the shipping costs are similar for each order. 
 
