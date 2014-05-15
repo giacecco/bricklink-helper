@@ -4,27 +4,77 @@ This is how LEGO projects grind to a halt if you order your bricks by hand...
 
 ![](docs/images/photo1.jpg)
 
+## Table of contents
+
+- [Introduction](#introduction)
+- [Usage](#usage)
+- [The data](#the-data)
+- [The algorithm](#the-algorithm)
+- [The maths](https://github.com/Digital-Contraptions-Imaginarium/bricklink-helper/blob/master/docs/the_maths_and_the_tools.md#the-maths)
+- [The tools](https://github.com/Digital-Contraptions-Imaginarium/bricklink-helper/blob/master/docs/the_maths_and_the_tools.md#the-tools)
+- [Licence](#licence)
+
 ##Introduction
 
-The idea came when I tried to build one of [Chris McVeigh's beautiful Lego designs](http://chrismcveigh.com/cm/building_guides_-_technology.html). I was already a regular user of [BrickLink](http://www.bricklink.com/) but never faced the problem of a) finding less common Lego parts and/or b) doing that often, when it becomes a substantial volume of work. I thought that it would have been useful to automate as much as possible of the process taking me from the building instructions to the actual orders, spending as little time and money in the process.
+[BrickLink](http://www.bricklink.com/) is an independent marketplace for new and used LEGO parts. It is an invaluable resources for LEGO lovers around the world, allowing them to buy the most disparate parts at very affordable prices. 
+
+When you have very specific needs, though, like the desire to build one of [Chris McVeigh's beautiful LEGO designs](http://chrismcveigh.com/cm/building_guides_-_technology.html), BrickLink's search features won't be able to help you much . [The Nintendo "NES" model](http://www.powerpig.ca/lego_kit_guides_2014/my_first_console_sprite.pdf), for example, is made of 61 different parts and a total of 217 pieces. This means that you will have to seach BrickLink for each of those 61 parts, struggling to find the same seller offering more than one. If you're lucky, and after a couple of hours of diligent work, you will end up making perhaps a dozen orders, very likely spending more than necessary in both pieces and shipping costs.
+
+Enter bricklink-helper! bricklink-helper (or "BH" for short) will search BrickLink for you and calculate the most cost effective order for you to make, all of this by running a script for a few minutes. As simple as that.
+
+##Usage
+
+BH requires runtime environments for both NodeJS and R.
+
+You will be able to install all required NodeJS libraries by just running:
+
+    npm install
+
+With R it may be a bit more complicated. Try executing:
+
+    rscript bricklink-order-simplex.R
+
+and if everything goes according to plan your R runtime will automatically install the binaries for the necessary packages.
+
+If all is working nicely, launch BH by doing:
+
+    node bricklink-helper.js --in parts_list_1.csv [--in parts_list_2.csv] --out orders.csv [--cache cache.json]
+
+You can specify as many input parts lists as you like: this is useful in case you wanted to build mode models, or more copies of the same; moreover, the more pieces you buy the more likely economies of scale are possible. At the moment of writing , BH support part lists in CSV format only: practically spreadsheets with two columns: the LEGO part id (named "partId") and the required quantity ("quantity"). 
+
+![](docs/images/screenshot01.png)
+
+If you don't know the LEGO part id for a brick, you can use LEGO's free [Digital Designer software](http://ldd.lego.com/en-gb/). Drag any piece in the window as if you wanted to use it for your model, and you will see the part id in the bottom status bar.
+
+![](docs/images/screenshot03.png)
+
+The output will be a simple CSV file with one row for each selected seller and one column per part Id.
+
+![](docs/images/screenshot02.png)
+
+It can happen that for particularly rare pieces the script won't be able to find options on BrickLink and it will tell you. In that case, you still have the option to use the more expensive [“Pick a brick” service](http://shop.lego.com/en-GB/Pick-A-Brick-ByTheme) by LEGO themselves.
+
+    *** WARNING *** Suitable sellers could not be found for part ids: part_id_1, part_id_2...
+
+What to do then is obvious: for each seller, go to *http://www.bricklink.com/store.asp?p=seller_username* and make your order!
+
+The use of the *cache* parameter is very important. It will save the results of the search locally in a JSON file, so that if you decide to order fewer pieces BH won't need to search BrickLink again for practically the same pieces and quantities. A typical execution of BH generates hundreds of requests to the BrickLink website: don't do that lightheartedly and cache the results wherever possible and be respectful of the BrickLink team's work and the money that goes into running it.
+
+The entire execution can take a long time. E.g. the last time I tested running BH vs the Nintendo NES model on a 2.6Ghz MacBook Pro with 16Gb RAM, calculating the optimal set of orders took about 20 minutes after searching on BrickLink completed.  
 
 ##The data
-BrickLink offers APIs for its sellers, but not for its customers. I needed a way to easily search for Lego parts programmaticaly. That was the first problem I addressed. By scraping BrickLink's search results web pages I got a reliable source of part availability data. This is already working nicely at the time of writing, although a bit more testing wouldn't hurt.
 
-##The algorithms
-How you get from the availability data to the actual orders depend on how exactly you define your objectives. 
+BrickLink offers APIs for its sellers, but not for its customers. I needed a way to easily search for LEGO parts programmaticaly. Scraping BrickLink's search results web pages gave me a reliable source of part availability data. 
 
-For early testing, I started from possibly the simplest approach to the problem, that was 'greedily' buying bricks starting from the seller that can offer the largest order and continuing that way until all possible pieces are found. This is already implemented in [bricklink-order-greedy.js](bricklink-order-greedy.js).
+##The algorithm
 
-The second approach, potentially optimal, is looking at the problem as a pure [integer linear programming](http://en.wikipedia.org/wiki/Integer_programming) one and tackling it using algorithms in literature, starting from the obvious ["simplex"](http://en.wikipedia.org/wiki/Simplex_algorithm). This work is ongoing.
+How you get from the pieces availability data to the actual orders depend on how exactly you define your objectives. 
 
-##The maths
+For early testing, I originally implemented the simplest approach possible, that was 'greedily' buying bricks starting from the seller that could offer the largest order, and then continuing like tha until all possible pieces were found.
 
-Read [this](https://github.com/Digital-Contraptions-Imaginarium/bricklink-helper/blob/master/docs/the_maths_and_the_tools.md#the-maths).
+The second and current approach looks at the problem as a pure [integer linear programming](http://en.wikipedia.org/wiki/Integer_programming) mathematical problem, and tackles it using algorithms in literature, starting from the obvious ["simplex"](http://en.wikipedia.org/wiki/Simplex_algorithm). Many implementations are available as open source, read more about the current implementation [here](docs/the_maths_and_the_tools).
 
-##The tools
-
-Read [this](https://github.com/Digital-Contraptions-Imaginarium/bricklink-helper/blob/master/docs/the_maths_and_the_tools.md#the-tools).
+If you're not happy with the above, well, develop your own algorithm! :-) Many things could be done differently, several are already captured in [the project's issues page](https://github.com/Digital-Contraptions-Imaginarium/bricklink-helper/issues?state=open).
 
 ##Licence
 
@@ -33,5 +83,3 @@ Read [this](https://github.com/Digital-Contraptions-Imaginarium/bricklink-helper
 LEGO(R) is a trademark of the LEGO Group of companies which does not sponsor, authorize, or endorse this project.  
 
 Running this code is equivalent to anonymously browsing the [BrickLink website](http://www.bricklink.com/). Using the BrickLink website constitutes acceptance of their [terms of service agreement](http://www.bricklink.com/help.asp?helpID=1919) and [privacy policy](http://www.bricklink.com/help.asp?helpID=47). In particular, be aware that you are not allowed to use this software to distribute, disclose, upload, or transfer to any third party any content or data you receive from or which is displayed on BrickLink.
-
-A single execution of the script will generate hundreds of pages being read on the BrickLink website: don't do that lightheartedly, cache the results wherever possible and be respectful of the BrickLink team's work.
