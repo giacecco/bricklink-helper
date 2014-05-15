@@ -54,7 +54,7 @@ var makeOrder = function (partsList_, availability_, callback) {
 	// http://dico.im/1nBkI4i to understand why)
 	var couldNotBeFound = partsList.reduce(function (memo, part) { 
 		if (!_.find(availability, function (a) {
-			return a.quantity >= part.quantity;
+			return (a.partId === part.partId) && (a.quantity >= part.quantity);
 		})) memo = memo.concat(part.partId);
 		return memo;
 	}, [ ]);
