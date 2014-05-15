@@ -34,6 +34,9 @@ module.exports = function (options) {
 
 		// save all data to transfer control to R
 		async.parallel([
+			function (callback) { writeCsv([
+				{ 'S': 2.00 },
+			], path.join(rExchangeFolder, "parameters.csv"), callback); },
 			function (callback) { writeCsv(partsList, path.join(rExchangeFolder, "partsList.csv"), callback); },
 			function (callback) { writeCsv(availability, path.join(rExchangeFolder, "availability.csv"), callback); },
 		], function (err) {
