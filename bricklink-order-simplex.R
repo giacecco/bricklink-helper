@@ -23,23 +23,6 @@ N <- length(part_id_reference)
 sellers_reference <- sort(unique(availability[availability$partId %in% part_id_reference, c('sellerUsername')]))
 M <- length(sellers_reference)
 
-# Just for testing: if any value in the 
-# no_of_sellers_who_can_offer_the_whole_quantity is zero, something is wrong
-# as at least one seller is supposed to exist who can offer the whole number
-# of pieces for at least one part
-check_consistency_of_input_data <- function () {
-    foo <- data.frame(part_id = part_id_reference, no_of_sellers_who_can_offer_the_whole_quantity = sapply(seq(length(part_id_reference)), function (pos) {
-        return(nrow(availability[(availability$partId == part_id_reference[pos]) & (availability$quantity >= r[pos]), ]))
-    }))
-    foo <- foo[foo$no_of_sellers_who_can_offer_the_whole_quantity == 0,]
-    if (nrow(foo) > 0) { 
-        cat("You should stop, the input data is not consistent and there may be no solution to the problem.\n")  
-        cat("The following part ids have no availability:\n")
-        foo$part_id
-    }
-}
-check_consistency_of_input_data()
-
 # See the documentation at http://dico.im/1nBkI4i ; the following creates the 
 # elements of the integer linear programming problem as required to use the 
 # SYMPHONY library.
@@ -85,6 +68,23 @@ v <- sapply(sellers_reference, function (seller_username) {
 b <- c(r, m, rep(0, M), rep(0, M))
 
 constraints <- c(rep("==", N), rep("<=", N * M), rep("<=", M), rep(">=", M))
+
+# Just for testing: if any value in the 
+# no_of_sellers_who_can_offer_the_whole_quantity is zero, something is wrong
+# as at least one seller is supposed to exist who can offer the whole number
+# of pieces for at least one part
+check_consistency_of_input_data <- function () {
+    foo <- data.frame(part_id = part_id_reference, no_of_sellers_who_can_offer_the_whole_quantity = sapply(seq(length(part_id_reference)), function (pos) {
+        return(nrow(availability[(availability$partId == part_id_reference[pos]) & (availability$quantity >= r[pos]), ]))
+    }))
+    foo <- foo[foo$no_of_sellers_who_can_offer_the_whole_quantity == 0,]
+    if (nrow(foo) > 0) { 
+        cat("You should stop, the input data is not consistent and there may be no solution to the problem.\n")  
+        cat("The following part ids have no availability:\n")
+        foo$part_id
+    }
+}
+check_consistency_of_input_data()
 
 # Start assembling the A matrix.  
 
@@ -132,7 +132,7 @@ solution <- Rsymphony_solve_LP(
 )
 
 # make a human-readable version of the solution 
-output <- data.frame(t(matrix(solution$solution, ncol = M))[, 1:N])
+output <- data.frame(t(matrix(solution$solution[1:(N*M)], ncol = M)))
 colnames(output) <- part_id_reference
 output$sellerUsername <- sellers_reference
 output <- output[rowSums(output[, setdiff(colnames(output), 'sellerUsername')]) > 0,  ]
