@@ -41,8 +41,8 @@ check_consistency_of_input_data <- function () {
 check_consistency_of_input_data()
 
 # See the documentation at http://dico.im/1nBkI4i ; the following creates the 
-# elements of the integer linear programming problem as required to get to 
-# standard form and apply the simplex algorithm.
+# elements of the integer linear programming problem as required to use the 
+# SYMPHONY library.
 
 # quantities is a matrix with one row for each seller and one column for each 
 # part id
@@ -68,7 +68,6 @@ prices <- t(sapply(sellers_reference, function (seller_username) {
 
 # 'c' is a quite reserved word in R! :-)
 c_ <- c(as.vector(t(prices)), rep(parameters$S, M))
-c_simplified <- as.vector(t(prices))
 
 r <- sapply(part_id_reference, function (part_id) {
     q <- sum(parts_list[parts_list$partId == part_id, c("quantity")])
@@ -84,22 +83,18 @@ v <- sapply(sellers_reference, function (seller_username) {
 }, USE.NAMES = FALSE)
 
 b <- c(r, m, rep(0, M), rep(0, M))
-b_simplified <- c(r, m)
 
 constraints <- c(rep("==", N), rep("<=", N * M), rep("<=", M), rep(">=", M))
-constraints_simplified <- c(rep("==", N), rep("<=", N * M))
 
 # Start assembling the A matrix.  
 
 # 1st group of rows (see in the documentation what I call 1st, 2nd etc.)
 A1 <- matrix(nrow = N, ncol = 0)
 for(x in seq(M)) A1 <- cbind(A1, diag(1, N))
-A1_simplified <- A1
 A1 <- cbind(A1, matrix(0, nrow = N, ncol = M))
 
 # 2nd group of rows
 A2 <- cbind(diag(1, N * M), matrix(0, nrow = N * M, ncol = M))
-A2_simplified <- diag(1, N * M)
     
 # 3rd group of rows
 A3 <- matrix(nrow = M, ncol = 0)
@@ -110,7 +105,7 @@ for(x in seq(M)) {
         matrix(0, nrow = M - x, ncol = N)    
     ))
 }
-A3 <- cbind(A3, diag(-T, M))
+A3 <- cbind(A3, diag(-T_, M))
 
 # 4th group of rows
 A4 <- matrix(nrow = M, ncol = 0)
@@ -125,18 +120,7 @@ A4 <- cbind(A4, diag(-v, M))
 
 # all together now!
 A <- rbind(A1, A2, A3, A4)
-A_simplified <- rbind(A1_simplified, A2_simplified)
-rm(A1_simplified, A2_simplified)
 rm(A1, A2, A3, A4)
-
-solution_simplified <- Rsymphony_solve_LP(
-    obj = c_simplified,
-    mat = A_simplified,
-    dir = constraints_simplified,
-    rhs = b_simplified,
-    max = FALSE,
-    types = rep("I", N * M)
-)
 
 solution <- Rsymphony_solve_LP(
     obj = c_,
@@ -148,8 +132,8 @@ solution <- Rsymphony_solve_LP(
 )
 
 # make a human-readable version of the solution 
-foo <- matrix(solution_simplified$solution, ncol = M)
-colnames(foo) = sellers_reference
-rownames(foo) = part_id_reference
-foo <- data.frame(t(foo))
-
+output <- data.frame(t(matrix(solution$solution, ncol = M))[, 1:N])
+colnames(output) <- part_id_reference
+output$sellerUsername <- sellers_reference
+output <- output[rowSums(output[, setdiff(colnames(output), 'sellerUsername')]) > 0,  ]
+write.csv(output, paste0(if (!is.na(args[1])) args[1] else ".r-exchange", "/output.csv"), row.names = FALSE)
