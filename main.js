@@ -45,27 +45,54 @@ var writeOrders = function(orders, callback) {
 		});
 }
 
+var makeOrder = function (partsList_, availability_, callback) {
+	// clones the input parameters
+	var partsList = JSON.parse(JSON.stringify(partsList_)),
+		availability = JSON.parse(JSON.stringify(availability_));
+	// print a warning about the pieces that could not be found in their 
+	// full quantity from at least one seller (read the documentation at
+	// http://dico.im/1nBkI4i to understand why)
+	var couldNotBeFound = partsList.reduce(function (memo, part) { 
+		if (!_.find(availability, function (a) {
+			return a.quantity >= part.quantity;
+		})) memo = memo.concat(part.partId);
+		return memo;
+	}, [ ]);
+	if (couldNotBeFound.length > 0) {
+		console.log("*** WARNING *** Suitable sellers could not be found for part ids: " + couldNotBeFound.join(", ") + ".");
+		// remove the aforementioned pieces from both the requirements and 
+		// the availability data
+		partsList = partsList.filter(function (p) { return !_.contains(couldNotBeFound, p.partId); });
+		availability = availability.filter(function (a) { return !_.contains(couldNotBeFound, a.partId); });
+	}
+	// call the dedicated algorithm to formulate the necessary orders
+	bricklinkOrder.makeOrder(partsList, availability, callback);		
+}
+
+// main 
+
 readPartsList(argv.in, function (err, partsList) {
 
-	function makeOrder() {
-		bricklinkOrder.makeOrder(partsList, availability, function (err, orders) {
-			writeOrders(orders, function (err) {
-				console.log("Finished.");
-			});		
-		})
-	}
+	var complete = function (err, orders) {
+		writeOrders(orders, function (err) {
+			console.log("Finished.");
+		});		
+	};
 
 	var availability;
 	if (argv.cache && fs.existsSync(argv.cache)) {
+		// if a cache filename was specified and the file exists, read the 
+		// bricks availability from there
 		console.log("Reading parts availability from cache...");
 		availability = JSON.parse(fs.readFileSync(argv.cache));
-		makeOrder();
+		makeOrder(partsList, availability, complete);
 	} else {
+		// alternatively, query BrickLink from scratch
 		console.log("Searching for parts availability online...");
 		bricklinkSearch.search(partsList, function (err, a) {
 			availability = a;
 			if (argv.cache) fs.writeFileSync(argv.cache, JSON.stringify(availability));
-			makeOrder();
+			makeOrder(partsList, availability, complete);
 		});
 	}
 });

@@ -35,31 +35,38 @@ var readCsv = function (filename, callback) {
 		});
 };
 
-module.exports = function (options) {
-
-	var makeOrder = function (partsList, availability, callback) {
-		var rExchangeFolder = path.join(__dirname, ".r-exchange");
-		// create the folder if it does not exist
-		if (!fs.existsSync(rExchangeFolder)) fs.mkdirSync(rExchangeFolder);
-		// save all data to transfer control to R
-		async.parallel([
-			function (callback) { writeCsv([
-				{ 'S': 2.00, 'maxSellers': 10 }
-			], path.join(rExchangeFolder, "parameters.csv"), callback); },
-			function (callback) { writeCsv(partsList, path.join(rExchangeFolder, "partsList.csv"), callback); },
-			function (callback) { writeCsv(availability, path.join(rExchangeFolder, "availability.csv"), callback); },
-		], function (err) {
-			console.log("Handing control over to R...");
-			exec('/usr/local/bin/rscript "' + path.join(__dirname, 'bricklink-order-simplex.R') + '" "' + rExchangeFolder + '"', function (error, stdout, stderr) {
-				console.log("Completed.");
-				console.log(stdout);
-				console.log(stderr);
-				readCsv(path.join(rExchangeFolder, "output.csv"), function (err, data) {
-					callback(null, data);
-				});
+var makeOrder = function (partsList_, availability_, callback) {
+	// clones the input parameters
+	var partsList = JSON.parse(JSON.stringify(partsList_)),
+		availability = JSON.parse(JSON.stringify(availability_)),
+		// TODO: make the exchange folder name random, so to allow multiple
+		// simultaneous executions of this function
+		// rExchangeFolder = path.join(__dirname, ".r-exchange-", Math.random().toString(36).replace(/[^a-z]+/g, ''));
+		rExchangeFolder = path.join(__dirname, ".r-exchange");
+	// create the R exchange folder if it does not exist
+	if (!fs.existsSync(rExchangeFolder)) fs.mkdirSync(rExchangeFolder);
+	// save all data to transfer control to R
+	async.parallel([
+		function (callback) { writeCsv([
+			{ 'S': 2.00, 'maxSellers': 10 }
+		], path.join(rExchangeFolder, "parameters.csv"), callback); },
+		function (callback) { writeCsv(partsList, path.join(rExchangeFolder, "partsList.csv"), callback); },
+		function (callback) { writeCsv(availability, path.join(rExchangeFolder, "availability.csv"), callback); },
+	], function (err) {
+		console.log("Handing control over to R...");
+		exec('/usr/local/bin/rscript "' + path.join(__dirname, 'bricklink-order-simplex.R') + '" "' + rExchangeFolder + '"', function (error, stdout, stderr) {
+			console.log("Completed.");
+			console.log(stdout);
+			console.log(stderr);
+			readCsv(path.join(rExchangeFolder, "output.csv"), function (err, data) {
+				// TODO: delete the R exhange folder
+				callback(null, data);
 			});
 		});
-	};
+	});
+};
+
+module.exports = function (options) {
 
 	return {
 		'makeOrder': makeOrder,
