@@ -13,7 +13,6 @@ var read = function (filename, callback) {
 		result = _.keys(result).map(function (x) {
 			return { 'partId': x, 'quantity': result[x] };
 		});
-		console.log(result);
 		callback(null, result);
 	});
 };
