@@ -9,7 +9,8 @@ var argv = require('yargs')
 	// local
 	bricklinkSearch = new require('./bricklink-search')({ 'debug': true }),
 	bricklinkOrder = new require('./bricklink-order-simplex')(),
-	lxfreader = new require('./lxf-reader')();
+	ldrReader = new require('./ldr-reader')(),
+	lxfReader = new require('./lxf-reader')();
 
 var readPartsList = function (filenames, callback) {
 
@@ -27,7 +28,10 @@ var readPartsList = function (filenames, callback) {
 				readFunction = readCSV
 				break;
 			case '.lxf':
-				readFunction = lxfreader.read
+				readFunction = lxRreader.read
+				break;
+			case '.ldr':
+				readFunction = ldrReader.read
 				break;
 		}
 		readFunction(filename, callback);
