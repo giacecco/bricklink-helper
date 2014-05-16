@@ -45,9 +45,3 @@ module.exports = function (options) {
 	};
 
 }
-
-read("/Users/giacecco/Projects/bricklink-helper/projects/nyan_cat_full.lxf", function (err, data) {
-	if (err) console.log(err);
-	console.log(data);
-	// console.log(JSON.stringify(data));
-});
