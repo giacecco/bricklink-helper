@@ -13,7 +13,6 @@ var read = function (filename, callback) {
 		.pipe(unzip.Parse())
 		.on('entry', function (entry) {
 			if (entry.path === "IMAGE100.LXFML") {
-				// entry.pipe(fs.createWriteStream('/Users/giacecco/tmp/foo.txt'));
 				entry
 					.pipe(es.mapSync(function (buffer) {
 						xmlText += buffer.toString();		
