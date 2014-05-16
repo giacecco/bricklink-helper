@@ -32,7 +32,7 @@ M <- length(sellers_reference)
 quantities <- t(sapply(sellers_reference, function (seller_username) {
     return(sapply(part_id_reference, function (part_id) {
         quantities_per_seller <- availability[(availability$sellerUsername == seller_username) & 
-                                          (availability$partId == part_id), c("quantity")]
+                                                  (availability$partId == part_id), c("quantity")]
         return(if (length(quantities_per_seller) == 0) 0 else sum(quantities_per_seller))
     }, USE.NAMES = FALSE))
 }, USE.NAMES = FALSE))
@@ -95,7 +95,7 @@ A1 <- cbind(A1, matrix(0, nrow = N, ncol = M))
 
 # 2nd group of rows
 A2 <- cbind(diag(1, N * M), matrix(0, nrow = N * M, ncol = M))
-    
+
 # 3rd group of rows
 A3 <- matrix(nrow = M, ncol = 0)
 for(x in seq(M)) {
@@ -139,3 +139,6 @@ output$sellerUsername <- sellers_reference
 # drop sellers from which we are not buying anything
 output <- output[rowSums(output[, setdiff(colnames(output), 'sellerUsername')]) > 0,  ]
 write.csv(output, paste0(if (!is.na(args[1])) args[1] else ".r-exchange", "/output.csv"), row.names = FALSE)
+
+# Save the workspace for further, manual investigation 
+save.image(paste0(if (!is.na(args[1])) args[1] else ".r-exchange", "/workspace.RData"))
