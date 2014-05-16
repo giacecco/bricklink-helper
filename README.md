@@ -40,13 +40,15 @@ and if everything goes according to plan your R runtime will automatically insta
 
 If all is working nicely, launch BH by doing:
 
-    node bricklink-helper.js --in parts_list_1.csv [--in parts_list_2.csv] --out orders.csv [--cache cache.json]
+    node bricklink-helper.js --in parts_list_1 [--in parts_list_2] --out orders.csv [--cache cache.json]
 
-You can specify as many input parts lists as you like: this is useful in case you wanted to build mode models, or more copies of the same; moreover, the more pieces you buy the more likely economies of scale are possible. At the moment of writing, BH supports part lists in CSV format only: practically spreadsheets with two columns: the LEGO part id (named "partId") and the required quantity ("quantity"). 
+The *parts_list* files can either be 'lxf' files, produced using LEGO's free [Digital Designer software](http://ldd.lego.com/en-gb/), or more simple CSV files: practically spreadsheets with two columns: the LEGO part id (named "partId") and the required quantity ("quantity"). 
 
 ![](docs/images/screenshot01.png)
 
-If you don't know the LEGO part id for a brick, you can use LEGO's free [Digital Designer software](http://ldd.lego.com/en-gb/). Drag any piece in the window as if you wanted to use it for your model, and you will see the part id in the bottom status bar.
+You can specify as many input parts lists as you like: this is useful in case you wanted to build mode models, or more copies of the same; moreover, the more pieces you buy the more likely economies of scale are possible. 
+
+If you don't know the LEGO part id for a brick, you can use LEGO's Digital Designer: drag any piece in the window as if you wanted to use it for your model, and you will see the part id in the bottom status bar.
 
 ![](docs/images/screenshot03.png)
 

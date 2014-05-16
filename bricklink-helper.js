@@ -4,18 +4,33 @@ var argv = require('yargs')
 	async = require('async'),
 	csv = require('csv'),
 	fs = require('fs'),
+	path = require('path'),
 	_ = require('underscore'),
+	// local
 	bricklinkSearch = new require('./bricklink-search')({ 'debug': true }),
-	bricklinkOrder = new require('./bricklink-order-simplex')();
+	bricklinkOrder = new require('./bricklink-order-simplex')(),
+	lxfreader = new require('./lxf-reader')();
 
 var readPartsList = function (filenames, callback) {
 
-	var readFile = function (filename, callback) {
+	var readCSV = function (filename, callback) {
 		csv()
 			.from.path(filename, { 'columns': true })
 			.to.array(function (data) {
 				callback(null, data);
 			});			
+	}
+
+	var readFile = function (filename, callback) {
+		switch (path.extname(filename.toLowerCase())) {
+			case '.csv':
+				readFunction = readCSV
+				break;
+			case '.lxf':
+				readFunction = lxfreader.read
+				break;
+		}
+		readFunction(filename, callback);
 	}
 
 	filenames = [ ].concat(filenames || [ ]);
