@@ -50,7 +50,7 @@ The *parts_list* files can either be:
 
 ![](docs/images/screenshot01.png)
 
-You can specify as many input parts lists as you like: this is useful in case you wanted to build mode models, or more copies of the same; moreover, the more pieces you buy the more likely economies of scale are possible. 
+You can specify as many input parts lists in as many of the supported formats as you like: this is useful in case you wanted to build mode models, or more copies of the same; moreover, the more pieces you buy the more likely economies of scale are possible. Note that thanks to BrickLink Team's wonderful work we don't need to worry if we are using LEGO's official part numbers or LDraw's as BrickLink's website can seamlessly use both.
 
 If you don't know the LEGO part id for a brick, you can use LEGO's Digital Designer: drag any piece in the window as if you wanted to use it for your model, and you will see the part id in the bottom status bar.
 
