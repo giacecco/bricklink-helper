@@ -30,11 +30,9 @@ var readPartsList = function (filenames, callback) {
 			case '.lxf':
 				readFunction = lxRreader.read
 				break;
-			/*
 			case '.ldr':
 				readFunction = ldrReader.read
 				break;
-			*/
 		}
 		readFunction(filename, callback);
 	}

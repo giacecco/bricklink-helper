@@ -44,7 +44,8 @@ If all is working nicely, launch BH by doing:
 
 The *parts_list* files can either be:
 
-- 'lxf' files, produced using LEGO's free [Digital Designer software](http://ldd.lego.com/en-gb/),
+- 'lxf' files, produced using LEGO's free [Digital Designer software](http://ldd.lego.com/en-gb/) (support is limited, please read the source for detail),
+- 'ldr' files, producing using the open source LEGO CAD [Bricksmith](http://bricksmith.sourceforge.net/)/[LDraw](http://www.ldraw.org/) (support is limited, please read the source for detail), or
 - 'csv' files: practically spreadsheet tables with two columns: a valid LEGO part id (named "partId") and the required quantity ("quantity"). 
 
 ![](docs/images/screenshot01.png)
