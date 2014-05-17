@@ -1,3 +1,18 @@
+/* **************************************************************************
+   I could not find the specifications for the LXF file format, probably 
+   because it is proprietary by LEGO. The files are not encrypted, though,
+   and LXF files are nothing but the .ZIP of two other files: IMAGE100.PNG (a 
+   .PNG design preview) and IMAGE100.LXFML, that is an XML file.
+
+   This implementation of the reader assumes that all bricks are referenced
+   in the XML file once for every time they are used, which means that 
+   producing the parts list means scanning the file top to bottom taking
+   count of the reference to each part.
+
+   Unfortunately, the format may be more complicated than this. If I am 
+   incorrect, this module could fail interpreting some of the files. 
+   ************************************************************************** */
+
 var es = require('event-stream'),
 	fs = require('fs'),
 	parseString = require('xml2js').parseString,
