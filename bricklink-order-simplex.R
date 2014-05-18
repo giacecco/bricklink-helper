@@ -3,12 +3,14 @@
 .packagesToInstall <- setdiff(.requiredPackages, installed.packages())
 if (length(.packagesToInstall) > 0) install.packages(.packagesToInstall)
 sapply(.requiredPackages, require, character.only = TRUE)
+# Set global option for read.csv
+options(stringsAsFactors = FALSE)
 
 # Read the data from the exchange folder.
 args <- commandArgs(trailingOnly = TRUE)
-parameters <- read.csv(paste0(if (!is.na(args[1])) args[1] else ".r-exchange", "/parameters.csv"), stringsAsFactors = FALSE)[1, ]
-parts_list <- read.csv(paste0(if (!is.na(args[1])) args[1] else ".r-exchange", "/partsList.csv"), stringsAsFactors = FALSE)
-availability <- read.csv(paste0(if (!is.na(args[1])) args[1] else ".r-exchange", "/availability.csv"), stringsAsFactors = FALSE)
+parameters <- read.csv(paste0(if (!is.na(args[1])) args[1] else ".r-exchange", "/parameters.csv"))[1, ]
+parts_list <- read.csv(paste0(if (!is.na(args[1])) args[1] else ".r-exchange", "/partsList.csv"))
+availability <- read.csv(paste0(if (!is.na(args[1])) args[1] else ".r-exchange", "/availability.csv"))
 
 # Create the reference part id list. Note that I ignore both:
 # a) the requirement for part ids that are not available on the market, and
