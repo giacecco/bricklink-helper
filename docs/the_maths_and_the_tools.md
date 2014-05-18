@@ -66,8 +66,6 @@ Where:
 
     ![](images/011.gif)
 
-    For simplicity, in the following I won't show the constraints that make the *y*'s binary, in the same way I am not showing that the *x*'s are >= 0.
-
   - then, we transform the original conditional constraint into the following:
 
     ![](images/012.gif)
