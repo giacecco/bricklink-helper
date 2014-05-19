@@ -50,7 +50,7 @@ Where:
 
   where *r<sub>j</sub> is the number of required bricks for the *j-th* part ("r" as in requirement).
 
-- Second, I can't order from a supplier more pieces than they got:
+- Second, I can't order from a supplier more pieces than they got, nor I want to order more than I need:
   
   ![](images/004.gif)
   
