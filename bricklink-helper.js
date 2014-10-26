@@ -1,5 +1,6 @@
 var argv = require('yargs')
 		.demand([ 'in', 'out' ])
+		.alias('searchPageDepth', 'd')
 		.argv,
 	async = require('async'),
 	csv = require('csv'),
@@ -7,7 +8,10 @@ var argv = require('yargs')
 	path = require('path'),
 	_ = require('underscore'),
 	// local
-	bricklinkSearch = new require('./bricklink-search')({ 'debug': true }),
+	bricklinkSearch = new require('./bricklink-search')({ 
+		'debug': true,
+		'searchPageDepth': argv.searchPageDepth, 
+	}),
 	bricklinkOrder = new require('./bricklink-order-simplex')(),
 	ldrReader = new require('./ldr-reader')(),
 	lxfReader = new require('./lxf-reader')();
