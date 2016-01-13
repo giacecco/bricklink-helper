@@ -32,7 +32,7 @@ var readPartsList = function (filenames, callback) {
 				readFunction = readCSV
 				break;
 			case '.lxf':
-				readFunction = lxRreader.read
+				readFunction = lxfReader.read
 				break;
 			case '.ldr':
 				readFunction = ldrReader.read
